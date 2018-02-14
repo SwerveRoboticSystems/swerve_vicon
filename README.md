@@ -3,10 +3,12 @@ Code repository for the Drexel ASME SDC team that is competing in the Student De
 
 [Competition Overview](https://goo.gl/zR7Z62)
 
-<div style="text-align:center">
-	<img src="misc/ASMESCD2018_IsoRender.png" height="50%"/>
-	<p style="font-weight:bold;">Robot Design Render</p>
-</div>
+
+
+<p align="center" style="font-weight:bold;">
+	<img src="misc/ASMESCD2018_IsoRender.png" height="500px"/>
+	<p align="center">Robot Design Render</p>
+</p>
 
 Workshop slides that were used to teach the team about the robot design process can be found below.
 
