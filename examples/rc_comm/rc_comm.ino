@@ -1,5 +1,6 @@
 /** 
  * @file rc_comm.ino
+ * @brief Example of how to get data from RC controller
  * @author Frederick Wachter - wachterfreddy@gmail.com
  * @date Created: 2017-01-27
  */

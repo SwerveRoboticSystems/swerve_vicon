@@ -1,5 +1,6 @@
 /** 
  * @file run_motor_simple.ino
+ * @brief Example of how to control a motor
  * @author Frederick Wachter - wachterfreddy@gmail.com
  * @date Created: 2017-01-20
  */

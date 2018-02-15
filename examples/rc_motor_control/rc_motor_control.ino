@@ -1,5 +1,6 @@
 /** 
  * @file rc_motor_control.ino
+ * @brief Example of how to control a motor using an RC signal
  * @author Frederick Wachter - wachterfreddy@gmail.com
  * @date Created: 2017-01-27
  */

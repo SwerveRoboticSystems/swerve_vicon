@@ -1,4 +1,10 @@
-
+/** 
+ * @file rc_motor_control.ino
+ * @brief Example of how to actuate a servo linear actuator
+ * @author Frederick Wachter - wachterfreddy@gmail.com
+ * @date Created: 2017-02-14
+ */
+ 
 #include <Servo.h>
 
 #define LIN_ACT_MIN 45
