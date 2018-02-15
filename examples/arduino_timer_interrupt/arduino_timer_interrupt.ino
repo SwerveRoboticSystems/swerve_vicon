@@ -1,5 +1,5 @@
 /** 
- * @file rc_comm.ino
+ * @file arduino_timer_interrupt.ino
  * @breif Example of how to use timer 1 as an ISR at 1Hz on the Arduino Uno
  * @author Frederick Wachter - wachterfreddy@gmail.com
  * @date Created: 2017-02-14
