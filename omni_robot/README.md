@@ -104,7 +104,7 @@ private:
 [Back to top](#top)
 
 
-<a id="enocder"/>
+<a id="encoder"/>
 
 ## Encoder Class
 
@@ -184,6 +184,8 @@ protected:
 };
 ```
 
+[Back to top](#top)
+
 
 <a id="rccontroller"/>
 
@@ -223,7 +225,7 @@ struct RCController6CHPins {
 class RCController6CH {
 public:
 	void setupChannel(int channel, int map_type, int threshold);
-	void setupChannel(int channel, int map_type, int min_value, int max_value)
+	void setupChannel(int channel, int map_type, int min_value, int max_value);
 
 protected:
 	RCController6CHState state;
