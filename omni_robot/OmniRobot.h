@@ -10,34 +10,36 @@
 
 #include <Arduino.h>
 
+#include "LED.h"             // LED status class
+#include "Motor.h"           // Motor class
+#include "RCController6CH.h" // 6 channel RC controller class
+#include "Sensor.h"          // Sensor class
+
 class OmniRobot {
-/** @class OmniRobot
- *  @brief Class to control SDC 2018 omni wheeled robot
- *  @author Frederick Wachter - wachterfreddy@gmail.com
- *  @date Created: 2018-02-14
- */
-
 public:
-	OmniRobot();
+	Motor drive_right();
+	Motor drive_left();
+	Motor drive_tail();
+	Motor shoot_left();
+	Motor shoot_right();
+	Motor pusher();
 
-	void setup();
-	void changeMotorPins(int, int, int, int, int);
+	Sensor compass();
+	Sensor current(); // current being used by the whole robot
+	Sensor ir_ball(); // sensor used to tell if a ball has been captured
+	Sensor ir_capture(); // sensor used to tell if a ball is infront of the robot or not
 
-	bool isSetup();
+	RCController6CH rc_controller();
 
-
-protected:
-	bool setup = false;
-
-private:
-	const int _pin_pwm_motor_left  = 0;
-	const int _pin_pwm_motor_right = 0;
-	const int _pin_pwm_motor_tail  = 0;
-	const int _pin_ppm_motor_shoot = 0;
-	const int _pin_ppm_motor_push  = 0;
-
-	void _setupMotorPins();
-
+	void encoderModel() {
+		// Code goes here ...
+	}
+	void controllerInputModel() { // maybe not needed? maybe define in rc controller class?
+		// Code goes here ...
+	}
+	void robotModel() {
+		// Code goes here ...
+	}
 };
 
 #endif /* OMNI_ROBOT_H_ */

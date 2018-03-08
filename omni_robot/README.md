@@ -3,6 +3,7 @@
 The skeleton code for the classes being made for the 2018 ASME SDC robots is shown below.
 
 ## Table of Contents
+- [Intallations](#install)
 - [OmniRobot Class](#omnirobot)
 - [Motor Class](#motor)
 - [Encoder Class](#encoder)
@@ -14,6 +15,17 @@ The skeleton code for the classes being made for the 2018 ASME SDC robots is sho
 Full Name | Email | Date | Revision | Description
 --- | --- | --- | --- | ---
 Frederick Wachter | wachterfreddy@gmail.com | 2018-02-25 | 0.0.0 | Initial document
+Frederick Wachter | wachterfreddy@gmail.com | 2018-03-08 | 0.0.1 | Install for MAG3110
+
+<a id="install"/>
+
+## Sensor Class Dependencies
+
+The sensor class depends on the Sparkfun MAG3110 library that be found [here](https://goo.gl/6krKLD). This library
+will need to be added to the libraries folder of the Arduino IDE. More information on the MAG3110 can be found 
+[here](https://goo.gl/mLZ2gx).
+
+[Back to top](#top)
 
 <a id="omnirobot"/>
 
@@ -23,10 +35,13 @@ This class is used to define the ASME SDC 2018 Omni-Wheeled robot used for the A
 Competition).
 
 ```cpp
-#include "Motor.h" # Motor class
-#include "Sensor.h" # Sensor class
-#include "RCController6CH.h" # 6 channel RC controller class
-#include "LED.h" # LED status class
+#ifndef OMNI_ROBOT_H_
+#define OMNI_ROBOT_H_
+
+#include "LED.h"             // LED status class
+#include "Motor.h"           // Motor class
+#include "RCController6CH.h" // 6 channel RC controller class
+#include "Sensor.h"          // Sensor class
 
 class OmniRobot {
 public:
@@ -54,6 +69,8 @@ public:
 		// Code goes here ...
 	}
 };
+
+#endif /* OMNI_ROBOT_H_ */
 ```
 
 [Back to top](#top)
@@ -67,8 +84,11 @@ This class is used for motors that have an encoder that works with the Encoder c
 sensor.
 
 ```cpp
+#ifndef MOTOR_H_
+#define MOTOR_H_
+
 #include "Encoder.h" // Encoder class and MOTOR_DIR_CW MOTOR_DIR_CCW
-#include "Sensor.h" // Sensor class
+#include "Sensor.h"  // Sensor class
 
 #define MOTOR_TYPE_DC    1
 #define MOTOR_TYPE_BLDC  2
@@ -99,6 +119,8 @@ private:
 	Encoder encoder;
 	Sensor current;
 };
+
+#endif /* MOTOR_H_ */
 ```
 
 [Back to top](#top)
@@ -111,6 +133,9 @@ private:
 This is a generalized class for an encoder.
 
 ```cpp
+#ifndef ENCODER_H_
+#define ENCODER_H_
+
 #define ENCODER_TYPE_INCREMENTAL 1
 #define ENCODER_TYPE_QUADRATURE  2
 #define ENCODER_TYPE_ABSOLUTE    3
@@ -139,6 +164,8 @@ protected:
 private:
 	void encoderInterrupt();
 };
+
+#endif /* ENCODER_H_ */
 ```
 
 [Back to top](#top)
@@ -151,6 +178,9 @@ private:
 This is a generalized sensor class for the current, IR TOF (time-of-flight), and compass sensors.
 
 ```cpp
+#ifndef SENSOR_H_
+#define SENSOR_H_
+
 #define SENSOR_TYPE_CURRENT    1
 #define SENSOR_TYPE_IR_DIGITAL 2
 #define SENSOR_TYPE_COMPASS    3
@@ -182,6 +212,8 @@ protected:
 	int DATA_SCALAR;
 	bool INTERRUPTABLE; // whether data can be updated on interrupt or not
 };
+
+#endif /* SENSOR_H_ */
 ```
 
 [Back to top](#top)
@@ -194,6 +226,9 @@ protected:
 This class is used to take the stick inputs from an RC controller through a 6CH receiver.
 
 ```cpp
+#ifndef RC_CONTROLLER_6CH_H_
+#define RC_CONTROLLER_6CH_H_
+
 #define DEFAULT_CH_VALUE_MIN 1000 // min PPM signal in microseconds
 #define DEFAULT_CH_VALUE_MAX 2000 // max PPM signal in microseconds
 
@@ -237,6 +272,8 @@ private:
 	void setupControllerInputTimerInterupt(); // interrupt to update controller input model
 	void setupChannelInterrupts();
 };
+
+#endif /* RC_CONTROLLER_6CH_H_ */
 ```
 
 [Back to top](#top)
@@ -252,9 +289,14 @@ to show on the LED strip during these events in order to indicate this informati
 **NOTE:** **_Still needs to be defined_**
 
 ```cpp
+#ifndef LED_H_
+#define LED_H_
+
 class LED {
 
 };
+
+#endif /* LED_H_ */
 ```
 
 [Back to top](#top)

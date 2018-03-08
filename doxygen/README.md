@@ -23,21 +23,33 @@ Formatting rules are based on the [Google C++ Style Guidelines](https://google.g
 
 **NOTE:** **_All files should have a max character counter per line set to 120._**
 
+#### Include Files
+
+Includes should be in alphabetical order and organized as shown below. There should be a space between standard libraries, third party libraries, and custom libraries.
+
+```cpp
+#include <standard_libraries>
+
+#include <third_party_libraries>
+
+#include <custom_libraries>
+```
+
 #### Naming Conventions
 
 The following table lays out the naming convention used for all files. 
 
 Object | Example
 --- | ---
-Variables | underscore_variable_names
-Constants | CONSTANTS_ALL_CAPS
-Defines | DEFINES_ALL_CAPS
-Floats | 1.0 (add period for whole numbers)
-Functions | camelCaseFunctions
-Classes | CamelCaseClasses
-Structs | CamelCaseStructs
-Namespaces | underscore_namespace_names
-Files | underscore_file_names
+Variables | ``` underscore_variable_names ```
+Constants | ``` CONSTANTS_ALL_CAPS ``` 
+Defines | ``` DEFINES_ALL_CAPS ```
+Floats | ``` 1.0 ``` (add period for whole numbers)
+Functions | ``` camelCaseFunctions ```
+Classes | ``` CamelCaseClasses ```
+Structs | ``` CamelCaseStructs ```
+Namespaces | ``` underscore_namespace_names ```
+Files | ``` underscore_file_names ```
 
 #### Function Inputs
 
