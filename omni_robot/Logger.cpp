@@ -1,20 +1,13 @@
 /**
- * @file Sensor.cpp
+ * @file Logger.cpp
  * @breif Implementation file for error codes
  * @author Frederick Wachter - wachterfreddy@gmail.com
  * @date Created: 2018-03-07
  */
 
-#include "Error.h"
+#include "Logger.h"
 
-#define SUCCESS              0
-#define MOTOR_TYPE_ERROR    -1 // motor type not recognized
-#define MOTOR_DIR_ERROR     -2 // provided and invalid motor direction
-#define ENCODER_SETUP_ERROR -3 // encoder has not been setup yet
-#define SENSOR_TYPE_ERROR   -4 // sensor type not recognized
-#define SENSOR_INT_ERROR    -5 // interrupt function not provided to interruptable sensor
-
-void error::displayError(int error_code, int val) {
+int logger::displayError(int error_code) {
 
 	Serial.print("[ERROR] ");
 
@@ -31,6 +24,24 @@ void error::displayError(int error_code, int val) {
 		case SENSOR_INT_ERROR:
 			Serial.println("Sensor is interruptable but no interrupt function was provided");
 			return SENSOR_INT_ERROR;
+	}
+
+	return error_code;
+
+}
+
+void logger::displayInfo(String message) {
+
+	Serial.print("[INFO] ");
+	Serial.println(message);
+
+}
+
+void logger::displayDebug(String message) {
+
+	if (DEBUG_LOGGER_LEVEL) {
+		Serial.print("[DEBUG] ");
+		Serial.println(message);
 	}
 
 }

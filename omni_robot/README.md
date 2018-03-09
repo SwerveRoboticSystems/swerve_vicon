@@ -3,7 +3,7 @@
 The skeleton code for the classes being made for the 2018 ASME SDC robots is shown below.
 
 ## Table of Contents
-- [Intallations](#install)
+- [Installations](#install)
 - [OmniRobot Class](#omnirobot)
 - [Motor Class](#motor)
 - [Encoder Class](#encoder)
@@ -19,7 +19,9 @@ Frederick Wachter | wachterfreddy@gmail.com | 2018-03-08 | 0.0.1 | Install for M
 
 <a id="install"/>
 
-## Sensor Class Dependencies
+## Installations
+
+#### Sensor Class Dependencies
 
 The sensor class depends on the Sparkfun MAG3110 library that be found [here](https://goo.gl/6krKLD). This library
 will need to be added to the libraries folder of the Arduino IDE. More information on the MAG3110 can be found 

@@ -5,7 +5,7 @@
  * @date Created: 2018-03-06
  */
 
-#include "Error.h"
+#include "Logger.h"
 #include "Motor.h"
 
 /* CONSTRUCTOR FUNCTIONS */
@@ -33,8 +33,8 @@ int Motor::setupMotor(int type, int pin_pwm, int pin_a, int pin_b) {
  */
 
 	// Initialize motor state
-	state.duty_cycle = 0; // set initial duty cycle to zero
-	state.direction  = MOTOR_FORWARD; // set initial direction to forward
+	state.speed     = 0; // set initial speed to zero
+	state.direction = MOTOR_FORWARD; // set initial direction to forward
 
 	// Store motor pins
 	pins.PIN_PWM = pin_pwm;
@@ -43,8 +43,8 @@ int Motor::setupMotor(int type, int pin_pwm, int pin_a, int pin_b) {
 	pinMode(pins.PIN_PWM, OUTPUT);
 
 	// Check motor type
-	if ((type < SENSOR_TYPE_MIN) || (type > SENSOR_TYPE_MAX)) {
-		return error::displayError(MOTOR_TYPE_ERROR);
+	if ((type < MOTOR_TYPE_MIN) || (type > MOTOR_TYPE_MAX)) {
+		return logger::displayError(MOTOR_TYPE_ERROR);
 	} else {
 		state.type = type;
 	}
@@ -56,8 +56,7 @@ int Motor::setupMotor(int type, int pin_pwm, int pin_a, int pin_b) {
 		_setupServo(pin_pwm);
 	}
 
-	Serial.print(_getMotorTypeName(state.type));
-	Serial.println(" has been setup");
+	logger::displayInfo(_getMotorTypeName() + " motor has been setup");
 	return SUCCESS;
 
 }
@@ -66,20 +65,21 @@ void Motor::run(int speed) {
 /** @return error code
  */
 
-	if (speed > 0) {
+	state.speed = speed;
+	if (state.speed > 0) {
 		state.direction = MOTOR_FORWARD;
-	} else if (speed < 0) {
+	} else if (state.speed < 0) {
 		state.direction = MOTOR_REVERSE;
 	} else {
 		state.direction = MOTOR_BRAKE;
 	}
 
 	if (state.type == MOTOR_TYPE_DC) {
-		return _runDCMotor(speed, direction);
+		return _runDCMotor();
 	} else if (state.type == MOTOR_TYPE_BLDC) {
-		return _runBLDCMotor(speed);
+		return _runBLDCMotor();
 	} else if (state.type == MOTOR_TYPE_SERVO) {
-		return _runServoMotor(speed);
+		return _runServoMotor();
 	}
 
 }
@@ -89,7 +89,7 @@ long Motor::getPosition(void) {
  */
 
 	if (!ENCODER_SETUP) {
-		return error::displayError(ENCODER_SETUP_ERROR);
+		return logger::displayError(ENCODER_SETUP_ERROR);
 	}
 
 	long int motor_position = _encoder.read(); // get encoder position
@@ -117,30 +117,35 @@ void Motor::_setupServo(int pin_pwm) {
 
 }
 
-void Motor::_runDCMotor(int speed, int direction) {
+void Motor::_runDCMotor(void) {
 
-	if (direction == MOTOR_FORWARD) {
+	state.speed = abs(state.speed);
+
+	if (state.direction == MOTOR_FORWARD) {
 		digitalWrite(pins.PIN_A, HIGH);
 		digitalWrite(pins.PIN_B, LOW);
-	} else if (direction == MOTOR_BRAKE) {
-		digitalWrite(pins.PIN_A, LOW);
-		digitalWrite(pins.PIN_B, HIGH);
-	} else if (direction == MOTOR_REVERSE) {
+	} else if (state.direction == MOTOR_BRAKE) {
 		digitalWrite(pins.PIN_A, HIGH);
+		digitalWrite(pins.PIN_B, HIGH);
+	} else if (state.direction == MOTOR_REVERSE) {
+		digitalWrite(pins.PIN_A, LOW);
 		digitalWrite(pins.PIN_B, HIGH);
 	}
 
-	speed = map(speed, MOTOR_SPEED_MIN, MOTOR_SPEED_MAX, MOTOR_PWM_MIN, MOTOR_PWM_MAX);
+	int speed;
+	speed = map(state.speed, MOTOR_SPEED_MIN, MOTOR_SPEED_MAX, MOTOR_PWM_MIN, MOTOR_PWM_MAX);
 	speed = constrain(speed, MOTOR_PWM_MIN, MOTOR_PWM_MAX);
 	analogWrite(pins.PIN_PWM, speed);
 
-}
-
-void Motor::_runBLDCMotor(int speed) {
+	logger::displayDebug("Running DC motor at speed: " + String(state.speed));
 
 }
 
-void Motor::_runServoMotor(int speed) {
+void Motor::_runBLDCMotor(void) {
+
+}
+
+void Motor::_runServoMotor(void) {
 
 }
 
@@ -150,12 +155,14 @@ String Motor::_getMotorTypeName(void) {
 
 	switch (state.type) {
 		case MOTOR_TYPE_DC:
-			return "DC motor";
+			return "DC";
 		case MOTOR_TYPE_BLDC:
-			return "Brushless DC motor";
+			return "Brushless DC";
 		case MOTOR_TYPE_SERVO:
-			return "Servo motor";
+			return "Servo";
 	}
+
+	return "";
 
 }
 
