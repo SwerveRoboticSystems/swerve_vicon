@@ -14,13 +14,16 @@ void setup() {
 }
 
 void loop() {
-	//omni_robot.displayRCChannels();
+	// omni_robot.displayRCChannels();
+	// omni_robot.displayRobotState();
+	omni_robot.displayShooterState();
 	delay(100);
 }
 
 void updateController(void) {
 	omni_robot.updateRCChannels();
 	omni_robot.runRobotModel();
+	omni_robot.runShooter();
 }
 
 

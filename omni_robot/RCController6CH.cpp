@@ -55,6 +55,11 @@ void RCController6CH::updateChannels(void) {
 	cli();
 	for (int pin = 0; pin < MAX_CHANNELS; pin++) {
 		channel_input = pulseIn(*pins.PINS[pin], HIGH, PULSE_IN_TIMEOUT);
+		if (channel_input == 0) { // if the controller is off, set input to zero and move to next input
+			*state.values[pin] = 0;
+			continue;
+		}
+
 		channel_input = map(channel_input, CH_VALUE_MIN, CH_VALUE_MAX, CH_VALUE_MAP_MIN, CH_VALUE_MAP_MAX);
 		channel_input = constrain(channel_input, CH_VALUE_MAP_MIN, CH_VALUE_MAP_MAX);
 		*state.values[pin] = channel_input;

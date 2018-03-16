@@ -13,17 +13,17 @@
 #define CH_VALUE_MIN 1200 // min PPM signal in microseconds
 #define CH_VALUE_MAX 1800 // max PPM signal in microseconds
 
-#define CH_VALUE_MAP_MIN -100
-#define CH_VALUE_MAP_MAX  100
+#define CH_VALUE_MAP_MIN -100 // minimum value to map the RC controller input to
+#define CH_VALUE_MAP_MAX  100 // maximum value to map the RC controller input to
 
 #define CH_MAP_TYPE_BINARY         1 // maps channel values to 0 to 1
 #define CH_MAP_TYPE_UNIDIRECTIONAL 2 // maps channel values to 0 to 100
 #define CH_MAP_TYPE_BIDIRECTIONAL  3 // maps channel values to -100 to 100
 
-#define MAX_CHANNELS 6
+#define MAX_CHANNELS 6 // max channels of the RC controller
 
-#define CHANNEL_UPDATE_RATE 100000 // 100ms
-#define PULSE_IN_TIMEOUT    100000 // 100ms
+#define CHANNEL_UPDATE_RATE 100000 // update rate in microseconds
+#define PULSE_IN_TIMEOUT    100000 // timeout for pulse function in microseconds
 
 struct RCController6CHState {
   volatile long int timestamp;  // time of last update

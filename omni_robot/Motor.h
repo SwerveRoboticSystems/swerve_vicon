@@ -10,6 +10,7 @@
 
 #include <Encoder.h> // Teensy Encoder library
 #include <Servo.h>   // Teensy Servo library
+// #include <PWMServo.h>
 
 // #include "Sensor.h"  // Sensor class
 
@@ -24,16 +25,21 @@
 #define MOTOR_BRAKE    0
 #define MOTOR_REVERSE -1
 
-#define MOTOR_SPEED_MIN 0
+#define MOTOR_SPEED_MIN   0
 #define MOTOR_SPEED_MAX 100
 
-#define MOTOR_PWM_MIN 0
-#define MOTOR_PWM_MAX 255
+#define MOTOR_PWM_MIN    0
+#define MOTOR_PWM_MAX  255
+#define MOTOR_PPM_MIN 1200
+#define MOTOR_PPM_MAX 1800
+#define MOTOR_PPM_OFF 1500
+
+#define ESC_ARM_DELAY 10
 
 #define NO_ENCODER_PIN -1 // pin to supply encoder class if not using it
 
 struct MotorState {
-  int type = 0; // motor type
+  int type;  // motor type
   int speed; // value between 0 and 100
   int direction;
 };
@@ -48,7 +54,7 @@ class Motor {
 public:
 
   /* Constructor Functions */
-  Motor(int, int, int, int);
+  Motor(int, int, int pin_a = 0, int pin_b = 0);
   /** @fn Motor(int, int, int, int)
    *  @brief Default constructor
    *  @author Frederick Wachter
@@ -102,6 +108,8 @@ private:
   Encoder _encoder;
   // Sensor  _current_sensor;
 
+  // volatile int _servo_update_it;
+
   /* Private Functions */
   void _setupDCMotor(int, int);
   /** @fn void _setupDCMotor(int, int)
@@ -110,29 +118,30 @@ private:
    *  @date Created: 2018-03-07
    */
 
-  void _setupServo(int);
-  /** @fn void _setupServo(int)
-   *  @brief Sets up servo class for BLDC and servo motors
+
+  void _setupBLDCMotor(void);
+  /** @fn void _setupBLDCMotor(void)
+   *  @brief Arms ECS for BLDC motor
    *  @author Frederick Wachter
-   *  @date Created: 2018-03-07
+   *  @date Created: 2018-03-16
    */
 
-  void _runDCMotor(void);
-  /** @fn void _runDCMotor(void)
+  void _runDCMotor(int);
+  /** @fn void _runDCMotor(int)
    *  @brief Runs DC motor at a desired speed and direction
    *  @author Frederick Wachter
    *  @date Created: 2018-03-07
    */
 
-  void _runBLDCMotor(void);
-  /** @fn void _runBLDCMotor(void)
+  void _runBLDCMotor(int);
+  /** @fn void _runBLDCMotor(int)
    *  @brief Runs BLDC motor at desired speed and direction
    *  @author Frederick Wachter
    *  @date Created: 2018-03-07
    */
 
-  void _runServoMotor(void);
-  /** @fn void _runServoMotor(void)
+  void _runServoMotor(int);
+  /** @fn void _runServoMotor(int)
    *  @brief Sets the position of the servo motor
    *  @author Frederick Wachter
    *  @date Created: 2018-03-07
