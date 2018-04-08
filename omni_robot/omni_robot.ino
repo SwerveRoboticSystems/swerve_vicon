@@ -5,25 +5,48 @@
  * @date Created: 2018-02-14
  */
 
+/* DEFENSE ROBOT */
 #include "OmniRobot.h"
 
 OmniRobot omni_robot;
 
-void setup() {
-
-}
+void setup() {}
 
 void loop() {
-	// omni_robot.displayRCChannels();
+	omni_robot.displayRCChannels();
 	// omni_robot.displayRobotState();
-	omni_robot.displayShooterState();
-	delay(100);
+	delay(500);
 }
 
 void updateController(void) {
-	omni_robot.updateRCChannels();
-	omni_robot.runRobotModel();
-	omni_robot.runShooter();
+	if (omni_robot.ready) {
+		omni_robot.updateRCChannels();
+		omni_robot.runRobotModel();
+	}
+	omni_robot.updateLED();
 }
+
+/* OFFENSE ROBOT */
+// #include "OffenseRobot.h"
+
+// OffenseRobot omni_robot;
+
+// void setup() {}
+
+// void loop() {
+// 	omni_robot.displayRCChannels();
+// 	// omni_robot.displayRobotState();
+// 	// omni_robot.displayShooterState();
+// 	delay(500);
+// }
+
+// void updateController(void) {
+// 	if (omni_robot.ready) {
+// 		omni_robot.updateRCChannels();
+// 		omni_robot.runRobotModel();
+// 		omni_robot.runShooter();
+// 	}
+// 	omni_robot.updateLED();
+// }
 
 

@@ -13,13 +13,13 @@
 
 /* CONSTRUCTOR FUNCTIONS */
 OmniRobot::OmniRobot(void) :
+			rc_controller(PIN_CH_1, &updateController),
+			led(PIN_LEFT_RED, PIN_LEFT_GREEN, PIN_LEFT_BLUE, PIN_RIGHT_RED, PIN_RIGHT_GREEN, PIN_RIGHT_BLUE),
 			drive_left( MOTOR_TYPE_DC,    PIN_PWM_LEFT,         PIN_A_LEFT,  PIN_B_LEFT),
 			drive_right(MOTOR_TYPE_DC,    PIN_PWM_RIGHT,        PIN_A_RIGHT, PIN_B_RIGHT),
-			drive_tail( MOTOR_TYPE_DC,    PIN_PWM_TAIL,         PIN_A_TAIL,  PIN_B_TAIL),
-			shoot_left( MOTOR_TYPE_BLDC,  PIN_PWM_SHOOT_LEFT),
-			shoot_right(MOTOR_TYPE_BLDC,  PIN_PWM_SHOOT_RIGHT),
-			pusher(     MOTOR_TYPE_SERVO, PIN_PWM_PUSHER),
-			rc_controller(PIN_CH_1, &updateController) {
+			drive_tail( MOTOR_TYPE_DC,    PIN_PWM_TAIL,         PIN_A_TAIL,  PIN_B_TAIL){
+
+	ready = true;
 
 }
 
@@ -69,54 +69,12 @@ void OmniRobot::runRobotModel(void) {
 
 }
 
-void OmniRobot::runShooter(void) {
-
-	// Initialized Variables
-	int pusher_input; // input for actuating the linear actuator
-	int shoot_input;  // input for actuating the shoot motors
-
-	// Get pusher and shoot input from controller
-	cli();
-	pusher_input = rc_controller.state.value_ch_3;
-	shoot_input  = rc_controller.state.value_ch_5;
-	sei();
-
-	// Map pusher input into relevant values
-	pusher_input = map(pusher_input, PUSHER_INPUT_MIN, CH_VALUE_MAP_MAX, PUSHER_OUTPUT_MIN, PUSHER_OUTPUT_MAX);
-	pusher_input = constrain(pusher_input, PUSHER_OUTPUT_MIN, PUSHER_OUTPUT_MAX);
-	shooter_state.position = (pusher_input/10)*10; // set the last digit to zero to avoid moving actuator too much
-
-	shooter_state.speed = map(shoot_input, -100, 100, 1200, 1800);
-	// // Map shoot input into relevant values
-	// if (shoot_input > SHOOT_INPUT_CAPTURE_THRESH) {
-	// 	shooter_state.speed = SHOOT_OUTPUT_CAPTURE;
-	// } else if (shoot_input < SHOOT_INPUT_SHOOT_THRESH) {
-	// 	shooter_state.speed = SHOOT_OUTPUT_SHOOT;
-	// } else {
-	// 	shooter_state.speed = SHOOT_OUTPUT_OFF;
-	// }
-
-	// Set pusher and shoot motrs to desired location/speed
-	pusher.run(     shooter_state.position);
-	shoot_left.run( shooter_state.speed);
-	delay(10);
-	shoot_right.run(shooter_state.speed);
-
-}
-
 void OmniRobot::displayRobotState(void) {
 
 	logger::displayInfo("Robot State: " + String(state.wheel_speed_left) + " (left) | " + 
 			String(state.wheel_speed_right) + " (right) | " + String(state.wheel_speed_tail) + 
 			" (tail) | " + String(state.body_speed) + " (body speed) | " + String(state.body_direction) 
 			+ " (body direction) | " + String(state.body_spin) + " (body spin)");
-
-}
-
-void OmniRobot::displayShooterState(void) {
-
-	logger::displayInfo("Shooter State: " + String(shooter_state.position) + " (position) | " + 
-			String(shooter_state.speed) + " (speed)");
 
 }
 
@@ -132,7 +90,14 @@ void OmniRobot::updateRCChannels(void) {
 
 }
 
- void OmniRobot::_applyDeadZone(int *input_1, int *input_2, int *input_3) {
+void OmniRobot::updateLED(void) {
+
+	led.setState(COLOR_GREEN);	
+
+}
+
+/* PRIVATE FUNCTIONS */
+void OmniRobot::_applyDeadZone(int *input_1, int *input_2, int *input_3) {
 
 	if (abs(*input_1) < DEAD_ZONE) {
 		*input_1 = 0;

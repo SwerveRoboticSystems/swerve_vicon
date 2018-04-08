@@ -95,6 +95,7 @@ protected:
   int CH_UPDATE_RATE = CHANNEL_UPDATE_RATE; // frequency at which the controller input model is executed
 
   friend class OmniRobot; // allow omni robot to access protected variables
+  friend class OffenseRobot; // allow offense robot to access protected variables
 
 private:
 

@@ -24,6 +24,9 @@ int logger::displayError(int error_code) {
 		case SENSOR_INT_ERROR:
 			Serial.println("Sensor is interruptable but no interrupt function was provided");
 			return SENSOR_INT_ERROR;
+		case LED_STATE_ERROR:
+			Serial.println("Provided LED state is not valid");
+			return LED_STATE_ERROR;
 	}
 
 	return error_code;

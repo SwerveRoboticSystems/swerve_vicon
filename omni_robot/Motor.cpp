@@ -9,7 +9,6 @@
 #include "Motor.h"
 
 /* CONSTRUCTOR FUNCTIONS */
-
 Motor::Motor(int type, int pin_pwm, int pin_a, int pin_b) :
 			_encoder(NO_ENCODER_PIN, NO_ENCODER_PIN) {
 
@@ -57,6 +56,7 @@ int Motor::setupMotor(int type, int pin_pwm, int pin_a, int pin_b) {
 		_setupBLDCMotor();
 	}
 
+	ready = true;
 	logger::displayInfo(_getMotorTypeName() + " motor has been setup");
 	return SUCCESS;
 
@@ -117,11 +117,10 @@ void Motor::_setupBLDCMotor(void) {
 	_servo.attach(pins.PIN_PWM, MOTOR_PPM_MIN, MOTOR_PPM_MAX);
 
 	// Arm ESC's
-  cli();
+  // cli();
   for (int ppm = 45; ppm < 90; ppm++) {
 		_servo.write(ppm);
 		delay(ESC_ARM_DELAY);
-		Serial.println(ppm);
   }
   for (int ppm = 90; ppm > 0; ppm--) {
 		_servo.write(ppm);
@@ -131,7 +130,7 @@ void Motor::_setupBLDCMotor(void) {
 		_servo.write(ppm);
 		delay(ESC_ARM_DELAY);
   }
-  sei();
+  // sei();
 
   state.speed = MOTOR_PPM_OFF; // set initial speed to zero
 

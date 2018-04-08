@@ -8,7 +8,7 @@
 #ifndef OMNI_ROBOT_H_
 #define OMNI_ROBOT_H_
 
-// #include "LED.h"             // LED status class
+#include "LED.h"             // LED status class
 #include "Motor.h"           // Motor class
 #include "RCController6CH.h" // 6 channel RC controller class
 // #include "Sensor.h"          // Sensor class
@@ -16,9 +16,6 @@
 #define PIN_PWM_LEFT        2
 #define PIN_PWM_RIGHT       3
 #define PIN_PWM_TAIL        4
-#define PIN_PWM_SHOOT_LEFT  6
-#define PIN_PWM_SHOOT_RIGHT 5
-#define PIN_PWM_PUSHER      7
 
 #define PIN_A_TAIL  33
 #define PIN_B_TAIL  34
@@ -29,21 +26,17 @@
 
 #define PIN_CH_1 27
 
+#define PIN_LEFT_RED     9
+#define PIN_LEFT_GREEN   8
+#define PIN_LEFT_BLUE   10
+#define PIN_RIGHT_RED   22
+#define PIN_RIGHT_GREEN 23
+#define PIN_RIGHT_BLUE  21
+
 #define SPEED_MIN   0
 #define SPEED_MAX 100
 #define DEAD_ZONE  10
 #define SPIN_GAIN   0.3
-
-#define PUSHER_INPUT_MIN   -50
-#define PUSHER_OUTPUT_MIN 1000
-#define PUSHER_OUTPUT_MAX 1900
-
-#define SHOOT_INPUT_CAPTURE_THRESH  50
-#define SHOOT_INPUT_OFF_THRESH       0
-#define SHOOT_INPUT_SHOOT_THRESH   -50
-#define SHOOT_OUTPUT_CAPTURE 1300
-#define SHOOT_OUTPUT_OFF     1500
-#define SHOOT_OUTPUT_SHOOT   1700
 
 void updateController(void);
 
@@ -56,13 +49,11 @@ struct OmniRobotState {
 	volatile int wheel_speed_right;
 	volatile int wheel_speed_tail;
 };
-struct ShooterState {
-  volatile int position;
-  volatile int speed;
-};
 
 class OmniRobot {
 public:
+
+  bool ready = false;
 
 	/* Constructor Functions */
 	OmniRobot(void);
@@ -80,25 +71,11 @@ public:
    *  @date Created: 2018-03-06
    */
 
-  void runShooter(void);
-  /** @fn void runShooter(void)
-   *  @brief Actuates the shooter based on input from the RC controller
-   *  @author Frederick Wachter
-   *  @date Created: 2018-03-15
-   */
-
 	void displayRobotState(void);
   /** @fn void displayRobotState(void)
    *  @brief Displays the robot state
    *  @author Frederick Wachter
    *  @date Created: 2018-03-06
-   */
-
-  void displayShooterState(void);
-  /** @fn void displayShooterState(void)
-   *  @brief Displays the shooter state
-   *  @author Frederick Wachter
-   *  @date Created: 2018-03-15
    */
 
 	void displayRCChannels(void);
@@ -115,24 +92,31 @@ public:
    *  @date Created: 2018-03-06
    */
 
+  void updateLED(void);
+  /** @fn void updateLED(void)
+   *  @brief Updates LED colors based on robot state
+   *  @author Frederick Wachter
+   *  @date Created: 2018-03-06
+   */
+
 protected:
 
 	OmniRobotState state;
-  ShooterState   shooter_state;
+
+  RCController6CH rc_controller;
+
+  LED led;
 
 	Motor drive_left;
 	Motor drive_right;
 	Motor drive_tail;
-	Motor shoot_left;
-	Motor shoot_right;
-	Motor pusher;
 
 	// Sensor compass();
 	// Sensor current(); // current being used by the whole robot
 	// Sensor ir_ball(); // sensor used to tell if a ball has been captured
 	// Sensor ir_capture(); // sensor used to tell if a ball is infront of the robot or not
 
-	RCController6CH rc_controller;
+private:
 
   static void _applyDeadZone(int*, int*, int*);
   /** @fn static void _applyDeadZone(int*, int*, int*)

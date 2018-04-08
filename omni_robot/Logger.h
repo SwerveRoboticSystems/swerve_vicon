@@ -17,6 +17,7 @@
 #define ENCODER_SETUP_ERROR -2 // encoder has not been setup yet
 #define SENSOR_TYPE_ERROR   -3 // sensor type not recognized
 #define SENSOR_INT_ERROR    -4 // interrupt function not provided to interruptable sensor
+#define LED_STATE_ERROR     -5 // provided LED state is not valid
 
 namespace logger {
 

@@ -53,6 +53,8 @@ struct MotorPins {
 class Motor {
 public:
 
+  bool ready = false;
+
   /* Constructor Functions */
   Motor(int, int, int pin_a = 0, int pin_b = 0);
   /** @fn Motor(int, int, int, int)
