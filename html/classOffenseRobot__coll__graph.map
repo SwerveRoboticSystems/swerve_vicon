@@ -1,0 +1,14 @@
+<map id="OffenseRobot" name="OffenseRobot">
+<area shape="rect" id="node2" href="$classOmniRobot.html" title="OmniRobot" alt="" coords="313,222,401,249"/>
+<area shape="rect" id="node3" href="$classMotor.html" title="Motor" alt="" coords="133,95,188,121"/>
+<area shape="rect" id="node4" href="$structMotorState.html" title="MotorState" alt="" coords="5,5,92,32"/>
+<area shape="rect" id="node5" href="$structMotorPins.html" title="MotorPins" alt="" coords="116,5,197,32"/>
+<area shape="rect" id="node6" href="$classLED.html" title="LED" alt="" coords="333,95,381,121"/>
+<area shape="rect" id="node7" href="$structLEDState.html" title="LEDState" alt="" coords="221,5,300,32"/>
+<area shape="rect" id="node8" href="$structLEDPins.html" title="LEDPins" alt="" coords="325,5,399,32"/>
+<area shape="rect" id="node9" href="$classRCController6CH.html" title="RCController6CH" alt="" coords="423,95,549,121"/>
+<area shape="rect" id="node10" href="$structRCController6CHState.html" title="RCController6CHState" alt="" coords="424,5,580,32"/>
+<area shape="rect" id="node11" href="$structRCController6CHPins.html" title="RCController6CHPins" alt="" coords="604,5,755,32"/>
+<area shape="rect" id="node12" href="$structOmniRobotState.html" title="OmniRobotState" alt="" coords="573,95,692,121"/>
+<area shape="rect" id="node13" href="$structShooterState.html" title="ShooterState" alt="" coords="425,222,523,249"/>
+</map>
