@@ -10,6 +10,8 @@
 
 #include "OmniRobot.h"
 
+#define BLDC_DELAY 10 // time to wait in milliseconds between actuating BLDC's
+
 #define PIN_PWM_SHOOT_LEFT  6
 #define PIN_PWM_SHOOT_RIGHT 5
 #define PIN_PWM_PUSHER      7
@@ -33,16 +35,16 @@ struct ShooterState {
 
 class OffenseRobot : public OmniRobot {
 public:
-	
-	/* Constructor Functions */
-	OffenseRobot(void);
+
+  /* Constructor Functions */
+  OffenseRobot(void);
   /** @fn OffenseRobot(void)
    *  @brief Default constructor
    *  @author Frederick Wachter
    *  @date Created: 2018-04-08
    */
 
-	/* Public Functions */
+  /* Public Functions */
   void runShooter(void);
   /** @fn void runShooter(void)
    *  @brief Actuates the shooter based on input from the RC controller
@@ -68,9 +70,9 @@ protected:
 
   ShooterState   shooter_state;
 
-	Motor shoot_left;
-	Motor shoot_right;
-	Motor pusher;
+  Motor shoot_left;
+  Motor shoot_right;
+  Motor pusher;
 
 };
 

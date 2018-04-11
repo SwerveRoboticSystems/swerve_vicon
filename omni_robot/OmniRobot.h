@@ -42,12 +42,12 @@ void updateController(void);
 
 struct OmniRobotState {
   volatile int body_spin;
-	volatile double body_speed;
-	volatile double body_direction;
+  volatile double body_speed;
+  volatile double body_direction;
 
-	volatile int wheel_speed_left;
-	volatile int wheel_speed_right;
-	volatile int wheel_speed_tail;
+  volatile int wheel_speed_left;
+  volatile int wheel_speed_right;
+  volatile int wheel_speed_tail;
 };
 
 class OmniRobot {
@@ -55,8 +55,8 @@ public:
 
   bool ready = false;
 
-	/* Constructor Functions */
-	OmniRobot(void);
+  /* Constructor Functions */
+  OmniRobot(void);
   /** @fn OmniRobot(void)
    *  @brief Default constructor
    *  @author Frederick Wachter
@@ -64,28 +64,28 @@ public:
    */
 
   /* Public Functions */
-	void runRobotModel(void);
+  void runRobotModel(void);
   /** @fn void runRobotModel(void)
    *  @brief Executes the robot model based on input from the RC controller
    *  @author Frederick Wachter
    *  @date Created: 2018-03-06
    */
 
-	void displayRobotState(void);
+  void displayRobotState(void);
   /** @fn void displayRobotState(void)
    *  @brief Displays the robot state
    *  @author Frederick Wachter
    *  @date Created: 2018-03-06
    */
 
-	void displayRCChannels(void);
+  void displayRCChannels(void);
   /** @fn void displayRCChannels(void)
    *  @brief Displays all the values from the RC controller
    *  @author Frederick Wachter
    *  @date Created: 2018-03-06
    */
 
-	void updateRCChannels(void);
+  void updateRCChannels(void);
   /** @fn void updateRCChannels(void)
    *  @brief Updates the RC controller values
    *  @author Frederick Wachter
@@ -101,20 +101,20 @@ public:
 
 protected:
 
-	OmniRobotState state;
+  OmniRobotState state;
 
   RCController6CH rc_controller;
 
   LED led;
 
-	Motor drive_left;
-	Motor drive_right;
-	Motor drive_tail;
+  Motor drive_left;
+  Motor drive_right;
+  Motor drive_tail;
 
-	// Sensor compass();
-	// Sensor current(); // current being used by the whole robot
-	// Sensor ir_ball(); // sensor used to tell if a ball has been captured
-	// Sensor ir_capture(); // sensor used to tell if a ball is infront of the robot or not
+  // Sensor compass();
+  // Sensor current(); // current being used by the whole robot
+  // Sensor ir_ball(); // sensor used to tell if a ball has been captured
+  // Sensor ir_capture(); // sensor used to tell if a ball is infront of the robot or not
 
 private:
 

@@ -13,17 +13,17 @@ OmniRobot omni_robot;
 void setup() {}
 
 void loop() {
-	omni_robot.displayRCChannels();
-	// omni_robot.displayRobotState();
-	delay(500);
+  omni_robot.displayRCChannels();
+  // omni_robot.displayRobotState();
+  delay(500);
 }
 
 void updateController(void) {
-	if (omni_robot.ready) {
-		omni_robot.updateRCChannels();
-		omni_robot.runRobotModel();
-	}
-	omni_robot.updateLED();
+  if (omni_robot.ready) {
+    omni_robot.updateRCChannels();
+    omni_robot.runRobotModel();
+  }
+  omni_robot.updateLED();
 }
 
 /* OFFENSE ROBOT */

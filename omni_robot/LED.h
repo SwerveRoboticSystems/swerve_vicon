@@ -29,41 +29,41 @@
 #define SIDE_RIGHT    2
 
 struct LEDState {
-	int led;
-	int red;
-	int green;
-	int blue;
-	int side;
-	bool is_blink;
-	bool blink;
-	uint32_t blink_start;
+  int led;
+  int red;
+  int green;
+  int blue;
+  int side;
+  bool is_blink;
+  bool blink;
+  uint32_t blink_start;
 };
 
 struct LEDPins {
-	int PIN_LEFT_RED;
-	int PIN_LEFT_GREEN;
-	int PIN_LEFT_BLUE;
-	int PIN_RIGHT_RED;
-	int PIN_RIGHT_GREEN;
-	int PIN_RIGHT_BLUE;
+  int PIN_LEFT_RED;
+  int PIN_LEFT_GREEN;
+  int PIN_LEFT_BLUE;
+  int PIN_RIGHT_RED;
+  int PIN_RIGHT_GREEN;
+  int PIN_RIGHT_BLUE;
 };
 
 class LED {
 public:
-	LED(int, int, int, int, int, int);
+  LED(int, int, int, int, int, int);
 
-	void setup(int, int, int, int, int, int);
-	void setState(int, bool blink = false, int side = SIDE_BOTH);
-	void getState(void);
+  void setup(int, int, int, int, int, int);
+  void setState(int, bool blink = false, int side = SIDE_BOTH);
+  void getState(void);
 
 protected:
-	LEDState state;
-	LEDPins  pins;
+  LEDState state;
+  LEDPins  pins;
 
 private:
-	void _updateState(void);
-	void _updateBlink(void);
-	void _setColor(int, int, int, int);
+  void _updateState(void);
+  void _updateBlink(void);
+  void _setColor(int, int, int, int);
 
 };
 
