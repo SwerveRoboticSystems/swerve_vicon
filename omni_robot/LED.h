@@ -8,7 +8,7 @@
 #ifndef LED_H_
 #define LED_H_
 
-#define COMMON_ANODE // comment if not using a common anode LED
+// #define COMMON_ANODE // comment if not using a common anode LED
 
 #define COLOR_NONE    0
 #define COLOR_RED     1

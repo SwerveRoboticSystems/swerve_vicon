@@ -27,11 +27,11 @@
 #define PIN_CH_1 27
 
 #define PIN_LEFT_RED     9
-#define PIN_LEFT_GREEN   8
-#define PIN_LEFT_BLUE   10
+#define PIN_LEFT_GREEN  10
+#define PIN_LEFT_BLUE    8
 #define PIN_RIGHT_RED   22
-#define PIN_RIGHT_GREEN 23
-#define PIN_RIGHT_BLUE  21
+#define PIN_RIGHT_GREEN 21
+#define PIN_RIGHT_BLUE  23
 
 #define SPEED_MIN   0
 #define SPEED_MAX 100
@@ -99,11 +99,11 @@ public:
    *  @date Created: 2018-03-06
    */
 
+  RCController6CH rc_controller;
+
 protected:
 
   OmniRobotState state;
-
-  RCController6CH rc_controller;
 
   LED led;
 

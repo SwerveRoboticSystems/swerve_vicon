@@ -8,6 +8,8 @@
 #ifndef OFFENSE_ROBOT_H_
 #define OFFENSE_ROBOT_H_
 
+#include <Servo.h>
+
 #include "OmniRobot.h"
 
 #define BLDC_DELAY 10 // time to wait in milliseconds between actuating BLDC's
@@ -45,7 +47,7 @@ public:
    */
 
   /* Public Functions */
-  void runShooter(void);
+  int runShooter(Servo&, Servo&);
   /** @fn void runShooter(void)
    *  @brief Actuates the shooter based on input from the RC controller
    *  @author Frederick Wachter
@@ -59,19 +61,19 @@ public:
    *  @date Created: 2018-03-15
    */
 
-  void updateLED(void);
+  // void updateLED(void);
   /** @fn void updateLED(void)
    *  @brief Updates LED colors based on robot state
    *  @author Frederick Wachter
    *  @date Created: 2018-03-06
    */
 
+  // Motor shoot_left;
+  // Motor shoot_right;
+
 protected:
 
   ShooterState   shooter_state;
-
-  Motor shoot_left;
-  Motor shoot_right;
   Motor pusher;
 
 };

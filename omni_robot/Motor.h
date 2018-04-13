@@ -93,6 +93,8 @@ public:
    */
 
   double getCurrentUsage(void);
+  
+  Servo   _servo;
 
 protected:
   
@@ -106,7 +108,6 @@ protected:
 private:
 
   /* Provate Variables */
-  Servo   _servo;
   Encoder _encoder;
   // Sensor  _current_sensor;
 

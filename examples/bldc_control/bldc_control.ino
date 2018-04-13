@@ -6,7 +6,7 @@ void setup() {
   Serial.begin(9600);
   
   //pinMode(5, OUTPUT);
-  bldc.attach(5);
+  bldc.attach(6);
   
   for (int angle = 1500; angle < 1600; angle++) {
     bldc.writeMicroseconds(angle);

@@ -83,4 +83,10 @@ void RCController6CH::displayChannels(void) {
 
 }
 
+int RCController6CH::getChannelVal(int channel) {
+
+  return *state.values[channel-1];
+
+}
+
 
