@@ -1,21 +1,21 @@
-# Drexel ASME SDC Team 2018
-Code repository for the Drexel ASME SDC team that competed in the Student Design Competition (SDC) hosted by ASME National at the 2018 ASME E-Fest East that occurred at Penn State on April 14th, 2018. The team placed 3rd out of the 54 teams that signed up for the competition. Some links and videos are below
+# THOR VICON
 
-[Competition Overview](https://goo.gl/zR7Z62)  
-[Video from Competition](https://goo.gl/o6p2c8)
+This repository contains code for using the THOR platform with a VICON system (tested on VICON Blade). THOR is a three omni-wheeled platform with integrated sensors including encoders, a compass, an accelerometer, and a SICK TiM-561 LIDAR mount. This platform provides data from these sensors to a ROS network hosted on a CPU on the platform in order to record this data in a time synchronized fashion and as well record data provided by a VICON system of the platform location and obstacles in the platforms local environment in order to provide ground truth data. This data then forms a dataset that can be used to test autonomy algorithms like Kalman and Particle filters as well as create sensor error models.
 
 <p align="center" style="font-weight:bold;">
-	<img src="misc/ASMESDC2018_TeamPhoto.jpg" height="500px"/>
-	<p align="center">Drexel ASME 2018 SDC Team at Penn State</p>
+	<img src="misc/THOR_WithLIDAR.png" height="250px"/>
+	<p align="center">THOR Platform with LIDAR</p>
 </p>
 
-<p align="center" style="font-weight:bold;">
-	<img src="misc/ASMESCD2018_IsoRender.png" height="500px"/>
-	<p align="center">Robot Design Render</p>
-</p>
+## Table of Contents
 
-Workshop slides that were used to teach the team about the robot design process can be found below.
+-- TODO --
 
-[Programming Workshop I](https://goo.gl/JvgcAz)  
-[Robot Modeling Workshop I](https://goo.gl/meSPPA) (Not finished)
+## Revisions List
+Full Name | Email | Date | Revision | Description
+--- | --- | --- | --- | ---
+Frederick Wachter | [wachterfreddy@gmail.com](mailto:wachterfreddy@gmail.com) | 2018-04-16 | 0.0.0 | Initial document
+
+-- TODO --
+
 
