@@ -59,7 +59,7 @@ void OmniRobot::runRobotModel(void) {
     double speed_scale = ((SPEED_MAX - state.body_spin) / double(max_wheel_speed - state.body_spin));
     state.wheel_speed_left  = floor((state.wheel_speed_left  - state.body_spin) * speed_scale)  + state.body_spin;
     state.wheel_speed_right = floor((state.wheel_speed_right - state.body_spin) * speed_scale)  + state.body_spin;
-    state.wheel_speed_left  = floor((state.wheel_speed_tail  - state.body_spin) * speed_scale)  + state.body_spin;
+    state.wheel_speed_tail  = floor((state.wheel_speed_tail  - state.body_spin) * speed_scale)  + state.body_spin;
   }
 
   // Move motors at desired speeds

@@ -478,9 +478,11 @@ void runShooter(void) {
   }
 
   // Set pusher and shoot motrs to desired location/speed
+  cli();
   pusher.writeMicroseconds(shooter_state.position);
   shoot_left.writeMicroseconds(shooter_state.speed);
   shoot_right.writeMicroseconds(shooter_state.speed);
+  sei();
 
 }
 

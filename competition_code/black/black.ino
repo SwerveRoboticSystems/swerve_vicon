@@ -33,7 +33,7 @@
 #define MOTOR_SPEED_MAX 100
 
 #define MOTOR_PWM_MIN    0
-#define MOTOR_PWM_MAX  255
+#define MOTOR_PWM_MAX  255 
 #define MOTOR_PPM_MIN 1200
 #define MOTOR_PPM_MAX 1800
 #define MOTOR_PPM_OFF 1500
@@ -212,7 +212,7 @@ void setup() {
     pinMode(pin, OUTPUT);
   }
 
-  setLEDState(COLOR_BLUE);
+  setLEDState(COLOR_RED);
 
   // ----- SETUP CONTROLL LOOP -----
   interval_timer.begin(controlLoop, CH_UPDATE_RATE);
@@ -231,42 +231,42 @@ void setup() {
     pinMode(pin, OUTPUT);
   }
 
-  // ----- SETUP SHOOT -----
-  for (int pin = 5; pin <= 7; pin++) {
-    pinMode(pin, OUTPUT);
-  }
+  // // ----- SETUP SHOOT -----
+  // for (int pin = 5; pin <= 7; pin++) {
+  //   pinMode(pin, OUTPUT);
+  // }
 
-  pusher.attach(PIN_PWM_PUSHER);
+  // pusher.attach(PIN_PWM_PUSHER);
 
-  led_state.is_blink = true;
-  led_state.side     = SIDE_RIGHT;
+  // led_state.is_blink = true;
+  // led_state.side     = SIDE_RIGHT;
 
-  shoot_right.attach(PIN_PWM_SHOOT_RIGHT);
-  for (int angle = 1500; angle < 1600; angle++) {
-    shoot_right.writeMicroseconds(angle);
-    delay(10);
-  }
-  for (int angle = 1600; angle > 1500; angle--) {
-    shoot_right.writeMicroseconds(angle);
-    delay(10);
-  }
-  shoot_right.writeMicroseconds(1500);
-  delay(500);
+  // shoot_right.attach(PIN_PWM_SHOOT_RIGHT);
+  // for (int angle = 1500; angle < 1600; angle++) {
+  //   shoot_right.writeMicroseconds(angle);
+  //   delay(10);
+  // }
+  // for (int angle = 1600; angle > 1500; angle--) {
+  //   shoot_right.writeMicroseconds(angle);
+  //   delay(10);
+  // }
+  // shoot_right.writeMicroseconds(1500);
+  // delay(500);
 
-  led_state.is_blink = true;
-  led_state.side     = SIDE_LEFT;
+  // led_state.is_blink = true;
+  // led_state.side     = SIDE_LEFT;
 
-  shoot_left.attach(PIN_PWM_SHOOT_LEFT);
-  for (int angle = 1500; angle < 1600; angle++) {
-    shoot_left.writeMicroseconds(angle);
-    delay(10);
-  }
-  for (int angle = 1600; angle > 1500; angle--) {
-    shoot_left.writeMicroseconds(angle);
-    delay(10);
-  }
-  shoot_left.writeMicroseconds(1500);
-  delay(500);
+  // shoot_left.attach(PIN_PWM_SHOOT_LEFT);
+  // for (int angle = 1500; angle < 1600; angle++) {
+  //   shoot_left.writeMicroseconds(angle);
+  //   delay(10);
+  // }
+  // for (int angle = 1600; angle > 1500; angle--) {
+  //   shoot_left.writeMicroseconds(angle);
+  //   delay(10);
+  // }
+  // shoot_left.writeMicroseconds(1500);
+  // delay(500);
 
   led_state.is_blink = false;
   led_state.side     = SIDE_BOTH;
@@ -288,7 +288,7 @@ void controlLoop(void) {
   if (robot_ready) {
     updateControllerChannels();
     runRobotModel();
-    runShooter();
+    // runShooter();
   }
   setLEDState(led_state.led, led_state.is_blink, led_state.side);
 }
@@ -478,9 +478,11 @@ void runShooter(void) {
   }
 
   // Set pusher and shoot motrs to desired location/speed
+  cli();
   pusher.writeMicroseconds(shooter_state.position);
   shoot_left.writeMicroseconds(shooter_state.speed);
   shoot_right.writeMicroseconds(shooter_state.speed);
+  sei();
 
 }
 
