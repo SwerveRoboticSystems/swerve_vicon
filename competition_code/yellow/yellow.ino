@@ -212,7 +212,7 @@ void setup() {
     pinMode(pin, OUTPUT);
   }
 
-  setLEDState(COLOR_BLUE);
+  setLEDState(COLOR_GREEN);
 
   // ----- SETUP CONTROLL LOOP -----
   interval_timer.begin(controlLoop, CH_UPDATE_RATE);
@@ -344,7 +344,7 @@ void runRobotModel(void) {
 
   // Get x, y, and spin input from controller
   cli();
-  x_input    =  controller_state.value_ch_2;
+  x_input    = -controller_state.value_ch_2;
   y_input    = -controller_state.value_ch_1;
   spin_input = -controller_state.value_ch_4;
   sei();
@@ -478,9 +478,11 @@ void runShooter(void) {
   }
 
   // Set pusher and shoot motrs to desired location/speed
+  cli();
   pusher.writeMicroseconds(shooter_state.position);
   shoot_left.writeMicroseconds(shooter_state.speed);
   shoot_right.writeMicroseconds(shooter_state.speed);
+  sei();
 
 }
 

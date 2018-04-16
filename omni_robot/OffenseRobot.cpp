@@ -12,14 +12,14 @@
 
 /* CONSTRUCTOR FUNCTIONS */
 OffenseRobot::OffenseRobot(void) :
-      shoot_left( MOTOR_TYPE_BLDC,  PIN_PWM_SHOOT_LEFT),
-      shoot_right(MOTOR_TYPE_BLDC,  PIN_PWM_SHOOT_RIGHT),
+      // shoot_left( MOTOR_TYPE_BLDC,  PIN_PWM_SHOOT_LEFT),
+      // shoot_right(MOTOR_TYPE_BLDC,  PIN_PWM_SHOOT_RIGHT),
       pusher(     MOTOR_TYPE_SERVO, PIN_PWM_PUSHER) {
 
 }
 
 /* PUBLIC FUNCTIONS */
-void OffenseRobot::runShooter(void) {
+int OffenseRobot::runShooter(Servo &shoot_left, Servo &shoot_right) {
 
   // Initialized Variables
   int pusher_input; // input for actuating the linear actuator
@@ -47,10 +47,9 @@ void OffenseRobot::runShooter(void) {
   }
 
   // Set pusher and shoot motrs to desired location/speed
-  pusher.run(     shooter_state.position);
-  shoot_left.run( shooter_state.speed);
-  delay(BLDC_DELAY);
-  shoot_right.run(shooter_state.speed);
+  pusher.run(shooter_state.position);
+
+  return shooter_state.speed;
 
 }
 
@@ -61,21 +60,21 @@ void OffenseRobot::displayShooterState(void) {
 
 }
 
-void OffenseRobot::updateLED(void) {
+// void OffenseRobot::updateLED(void) {
 
-  if (shoot_left.ready == false) {
-    Serial.println("Shoot left: " + String(shoot_left.ready));
-    led.setState(COLOR_YELLOW, BLINK_ON, SIDE_LEFT);
-    return;
-  }
-  if (shoot_right.ready == false) {
-    Serial.println("Shoot right: " + String(shoot_right.ready));
-    led.setState(COLOR_YELLOW, BLINK_ON, SIDE_RIGHT);
-    return;
-  }
+//   if (shoot_left.ready == false) {
+//     Serial.println("Shoot left: " + String(shoot_left.ready));
+//     led.setState(COLOR_YELLOW, BLINK_ON, SIDE_LEFT);
+//     return;
+//   }
+//   if (shoot_right.ready == false) {
+//     Serial.println("Shoot right: " + String(shoot_right.ready));
+//     led.setState(COLOR_YELLOW, BLINK_ON, SIDE_RIGHT);
+//     return;
+//   }
 
-  OmniRobot::updateLED();
+//   OmniRobot::updateLED();
 
-}
+// }
 
 

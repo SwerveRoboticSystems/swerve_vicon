@@ -44,7 +44,6 @@ void LED::setup(int pin_left_red, int pin_left_green, int pin_left_blue,
   _setColor(min_val, min_val, min_val, SIDE_BOTH);
   state.led = -1;
 
-
 }
 
 void LED::setState(int des_state, bool blink, int side) {
@@ -139,31 +138,34 @@ void LED::_setColor(int red_value, int green_value, int blue_value, int side) {
   min_val = MAX_COLOR_VALUE;
 #endif
 
+  cli();
   if (side == SIDE_BOTH) {
-    analogWrite(pins.PIN_LEFT_RED,    red_value);
-    analogWrite(pins.PIN_LEFT_GREEN,  green_value);
-    analogWrite(pins.PIN_LEFT_BLUE,   blue_value);
-    analogWrite(pins.PIN_RIGHT_RED,   red_value);
-    analogWrite(pins.PIN_RIGHT_GREEN, green_value);
-    analogWrite(pins.PIN_RIGHT_BLUE,  blue_value);
+    // analogWrite(pins.PIN_LEFT_RED,    green_value);
+    // analogWrite(pins.PIN_LEFT_GREEN,  green_value);
+    analogWrite(pins.PIN_LEFT_BLUE,   green_value);
+    // analogWrite(pins.PIN_RIGHT_RED,   green_value);
+    // analogWrite(pins.PIN_RIGHT_GREEN, green_value);
+    analogWrite(pins.PIN_RIGHT_BLUE,  green_value);
     logger::displayDebug("LED displayed on both sides");
+    Serial.println(red_value);
   } else if (side == SIDE_LEFT) {
-    analogWrite(pins.PIN_LEFT_RED,    red_value);
-    analogWrite(pins.PIN_LEFT_GREEN,  green_value);
-    analogWrite(pins.PIN_LEFT_BLUE,   blue_value);
-    analogWrite(pins.PIN_RIGHT_RED,   min_val);
-    analogWrite(pins.PIN_RIGHT_GREEN, min_val);
-    analogWrite(pins.PIN_RIGHT_BLUE,  min_val);
-    logger::displayDebug("LED displayed on left side");
+    // analogWrite(pins.PIN_LEFT_RED,    red_value);
+    // analogWrite(pins.PIN_LEFT_GREEN,  green_value);
+    // analogWrite(pins.PIN_LEFT_BLUE,   blue_value);
+    // analogWrite(pins.PIN_RIGHT_RED,   min_val);
+    // analogWrite(pins.PIN_RIGHT_GREEN, min_val);
+    // analogWrite(pins.PIN_RIGHT_BLUE,  min_val);
+    // logger::displayDebug("LED displayed on left side");
   } else if (side == SIDE_RIGHT) {
-    analogWrite(pins.PIN_LEFT_RED,    min_val);
-    analogWrite(pins.PIN_LEFT_GREEN,  min_val);
-    analogWrite(pins.PIN_LEFT_BLUE,   min_val);
-    analogWrite(pins.PIN_RIGHT_RED,   red_value);
-    analogWrite(pins.PIN_RIGHT_GREEN, green_value);
-    analogWrite(pins.PIN_RIGHT_BLUE,  blue_value);
-    logger::displayDebug("LED displayed on right side");
+    // analogWrite(pins.PIN_LEFT_RED,    min_val);
+    // analogWrite(pins.PIN_LEFT_GREEN,  min_val);
+    // analogWrite(pins.PIN_LEFT_BLUE,   min_val);
+    // analogWrite(pins.PIN_RIGHT_RED,   red_value);
+    // analogWrite(pins.PIN_RIGHT_GREEN, green_value);
+    // analogWrite(pins.PIN_RIGHT_BLUE,  blue_value);
+    // logger::displayDebug("LED displayed on right side");
   }
+  sei();
 
 }
 

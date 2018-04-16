@@ -92,9 +92,9 @@ long Motor::getPosition(void) {
     return logger::displayError(ENCODER_SETUP_ERROR);
   }
 
-long int motor_position = _encoder.read(); // get encoder position
+  long int motor_position = _encoder.read(); // get encoder position
 
-return motor_position;
+  return motor_position;
 
 }
 
@@ -114,25 +114,77 @@ void Motor::_setupDCMotor(int pin_a, int pin_b) {
 void Motor::_setupBLDCMotor(void) {
 
   // Setup BLDC
-  _servo.attach(pins.PIN_PWM, MOTOR_PPM_MIN, MOTOR_PPM_MAX);
+  // _servo.attach(pins.PIN_PWM, MOTOR_PPM_MIN, MOTOR_PPM_MAX);
+  // delay(1);
+  // _servo.write(40);
+
+  // for (int angle = 1500; angle < 1600; angle++) {
+  //   _servo.writeMicroseconds(angle);
+  //   delay(10);
+  //   Serial.println(angle);
+  // }
+  // for (int angle = 1600; angle > 1500; angle--) {
+  //   _servo.writeMicroseconds(angle);
+  //   delay(10);
+  //   Serial.println(angle);
+  // }
 
   // Arm ESC's
   // cli();
-  for (int ppm = 45; ppm < 90; ppm++) {
-    _servo.write(ppm);
-    delay(ESC_ARM_DELAY);
-  }
-  for (int ppm = 90; ppm > 0; ppm--) {
-    _servo.write(ppm);
-    delay(ESC_ARM_DELAY);
-  }
-  for (int ppm = 0; ppm < 45; ppm++) {
-    _servo.write(ppm);
-    delay(ESC_ARM_DELAY);
-  }
+  // for(int i = 0; i < 130; i++)
+  // {
+  //    _servo.write(i);
+  //    Serial.println(i);
+  //    delay(50);
+  // }
+  // for(int i = 130; i > -1; i--)
+  // {
+  //    _servo.write(i);
+  //    Serial.println(i);
+  //    delay(50);
+  // }
+
+  // for (int ppm = 45; ppm < 60; ppm++) {
+  //   _servo.write(ppm);
+  //   delay(ESC_ARM_DELAY);
+  // }
+  // for (int ppm = 60; ppm > 30; ppm--) {
+  //   _servo.write(ppm);
+  //   delay(ESC_ARM_DELAY);
+  // }
+  // for (int ppm = 45; ppm < 90; ppm++) {
+  //   _servo.write(ppm);
+  //   delay(ESC_ARM_DELAY);
+  // }
+  // for (int ppm = 90; ppm > 0; ppm--) {
+  //   _servo.write(ppm);
+  //   delay(ESC_ARM_DELAY);
+  // }  
+  // for (int ppm = 0; ppm < 45; ppm++) {
+  //   _servo.write(ppm);
+  //   delay(ESC_ARM_DELAY);
+  // }
+
+  // long int mil = millis();
+  // while ((millis() - mil) < 2000) {
+  //   analogWriteFrequency(pins.PIN_PWM, 50);
+  //   analogWrite(pins.PIN_PWM, 127);
+  // }
+  // mil = millis();
+  // while ((millis() - mil) < 2000) {
+  //   _servo.writeMicroseconds(2000);
+  //   Serial.println((millis() - mil));
+  //   delay(10);
+  // }
+  // mil = millis();
+  // while ((millis() - mil) < 2000) {
+  //   _servo.writeMicroseconds(1000);
+  //   Serial.println((millis() - mil));
+  //   delay(10);
+  // }
   // sei();
 
-state.speed = MOTOR_PPM_OFF; // set initial speed to zero
+  state.speed = MOTOR_PPM_OFF; // set initial speed to zero
 
 }
 

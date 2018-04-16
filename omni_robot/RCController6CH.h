@@ -87,6 +87,8 @@ public:
    *  @date Created: 2018-03-08
    */
 
+  int getChannelVal(int);
+
 protected:
 
   RCController6CHState state;
