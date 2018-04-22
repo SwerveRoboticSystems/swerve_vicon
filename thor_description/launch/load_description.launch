@@ -1,0 +1,28 @@
+<!-- 
+@file load_description.launch
+@brief Loads THOR robot description to ROS parameter server
+@author Frederick Wachter - wachterfreddy@gmail.com
+@date Created: 2018-04-20
+-->
+
+<launch>
+
+	<!-- ROS arguments -->
+  <arg name="robot_name" default="thor"/>
+  <arg name="vel_control" default="true"/>
+
+	<!-- Load Robot Description -->
+  <group if="$(arg vel_control)">
+    <param name="robot_description" command="$(find xacro)/xacro '--inorder' 
+        '$(find thor_description)/urdf/thor.urdf.xacro' 
+        hardware_interface:=VelocityJointInterface robot_name:=$(arg robot_name)"/>
+  </group>
+  <group unless="$(arg vel_control)">
+    <param name="robot_description" command="$(find xacro)/xacro '--inorder' 
+        '$(find thor_description)/urdf/thor.urdf.xacro' 
+        hardware_interface:=PositionJointInterface robot_name:=$(arg robot_name)"/>
+  </group>
+
+</launch>
+
+

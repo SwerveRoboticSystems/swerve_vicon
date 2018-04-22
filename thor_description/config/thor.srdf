@@ -1,0 +1,70 @@
+<?xml version="1.0" ?>
+
+<!--
+@file thor.srdf
+@brief SRDF for the THOR robot
+@author Frederick Wachter - wachterfreddy@gmail.com
+@date Created: 2018-04-20
+-->
+
+<robot name="thor">
+
+  <virtual_joint name="world_joint" type="planar" parent_frame="world" child_link="odom" />
+  
+  <group name="thor">
+    <joint name="thor_base_joint" />
+  </group>
+
+  <group name="left_drive">
+    <joint name="thor_base_joint" />
+    <joint name="thor_left_wheel_joint" />
+  </group>
+
+  <group name="right_drive">
+    <joint name="thor_base_joint" />
+    <joint name="thor_right_wheel_joint" />
+  </group>
+
+  <group name="tail_drive">
+    <joint name="thor_base_joint" />
+    <joint name="thor_tail_wheel_joint" />
+  </group>
+
+  <end_effector name="left_end_effector" parent_link="thor_left_wheel" group="left_drive" />
+  <end_effector name="right_end_effector" parent_link="thor_right_wheel" group="right_drive" />
+  <end_effector name="tail_end_effector" parent_link="thor_tail_wheel" group="tail_drive" />
+  <end_effector name="thor_end_effector" parent_link="thor_body" group="thor" />
+
+  <disable_collisions link1="thor_left_wheel" link2="thor_left_motor" reason="Adjacent" />
+  <disable_collisions link1="thor_right_wheel" link2="thor_right_motor" reason="Adjacent" />
+  <disable_collisions link1="thor_tail_wheel" link2="thor_tail_motor" reason="Adjacent" />
+  <disable_collisions link1="thor_front_motor" link2="swerve_body" reason="Adjacent" />
+  <disable_collisions link1="thor_right_motor" link2="swerve_body" reason="Adjacent" />
+  <disable_collisions link1="thor_tail_motor" link2="swerve_body" reason="Adjacent" />
+  <disable_collisions link1="thor_body" link2="odom" reason="Adjacent" />
+
+  <disable_collisions link1="thor_left_wheel" link2="odom" reason="Never" />
+  <disable_collisions link1="thor_right_wheel" link2="odom" reason="Never" />
+  <disable_collisions link1="thor_tail_wheel" link2="odom" reason="Never" />
+  <disable_collisions link1="thor_left_motor" link2="odom" reason="Never" />
+  <disable_collisions link1="thor_right_motor" link2="odom" reason="Never" />
+  <disable_collisions link1="thor_tail_motor" link2="odom" reason="Never" />
+
+  <disable_collisions link1="thor_left_wheel" link2="swerve_body" reason="Never" />
+  <disable_collisions link1="thor_right_wheel" link2="swerve_body" reason="Never" />
+  <disable_collisions link1="thor_tail_wheel" link2="swerve_body" reason="Never" />
+
+  <disable_collisions link1="thor_left_wheel" link2="thor_right_wheel" reason="Never" />
+  <disable_collisions link1="thor_left_wheel" link2="thor_right_motor" reason="Never" />
+  <disable_collisions link1="thor_left_wheel" link2="thor_tail_wheel" reason="Never" />
+  <disable_collisions link1="thor_left_wheel" link2="thor_tail_motor" reason="Never" />
+  <disable_collisions link1="thor_right_wheel" link2="thor_left_wheel" reason="Never" />
+  <disable_collisions link1="thor_right_wheel" link2="thor_left_motor" reason="Never" />
+  <disable_collisions link1="thor_right_wheel" link2="thor_tail_wheel" reason="Never" />
+  <disable_collisions link1="thor_right_wheel" link2="thor_tail_motor" reason="Never" />
+  <disable_collisions link1="thor_tail_wheel" link2="thor_left_wheel" reason="Never" />
+  <disable_collisions link1="thor_tail_wheel" link2="thor_left_motor" reason="Never" />
+  <disable_collisions link1="thor_tail_wheel" link2="thor_right_wheel" reason="Never" />
+  <disable_collisions link1="thor_tail_wheel" link2="thor_right_motor" reason="Never" />
+
+</robot>

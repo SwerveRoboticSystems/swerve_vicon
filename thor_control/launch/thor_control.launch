@@ -1,0 +1,47 @@
+<!--
+@file thor_control.launch
+@brief Start ROS control for ROS Gazebo interface with the THOR platform
+@author Frederick Wachter - wachterfreddy@gmail.com
+@date Created: 2018-04-20
+-->
+
+<launch>
+
+  <!--
+    Arguments
+  -->
+  <arg name="vel_control" default="true"/> <!-- by default, load the position joint controllers -->
+  <arg name="shutdown_timeout" default="1"/> <!-- by default, will wait 1 second to shutdown controller manager -->
+
+  <!--
+    Load ROS Parameters
+  -->
+  <!-- Load joint controller configurations -->
+  <rosparam file="$(find thor_control)/config/thor_control.yaml" command="load"/>
+
+  <!--
+    Run ROS Nodes
+  -->
+  <!-- load the controllers -->
+  <group if="$(arg vel_control)">
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" ns="/thor" args="joint_state_controller joint_left_wheel_vel_controller
+        joint_right_wheel_vel_controller joint_tail_wheel_vel_controller
+        --shutdown-timeout=$(arg shutdown_timeout)"/>
+  </group>
+  <group unless="$(arg vel_control)">
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" ns="/thor" args="joint_state_controller joint_left_wheel_pos_controller
+        joint_right_wheel_pos_controller joint_tail_wheel_pos_controller
+        --shutdown-timeout=$(arg shutdown_timeout)"/>
+  </group>
+
+  <!-- Run robot state publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" 
+      respawn="false" output="screen">
+    <remap from="/joint_states" to="/thor/joint_states"/>
+  </node>
+
+</launch>
+
+

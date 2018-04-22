@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<!--
+@file thor.urdf.xacro
+@brief Main xacro file for THOR robot
+@author Frederick Wachter - wachterfreddy@gmail.com
+@date Created: 2018-04-20
+-->
+
+<robot name="thor" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!--
+    DEFAULT ARGUMENT DEFINITION
+  -->
+
+  <xacro:arg name="robot_name" default="thor"/>
+  <xacro:arg name="hardware_interface" default="VelocityJointInterface"/>
+
+
+  <!--
+    FIXED FRAME DEFINITION
+  -->
+
+  <!-- Fixed odom dummy frame -->
+  <link name="odom" />
+
+
+  <!-- 
+    IMPORTS 
+  -->
+
+  <!-- Import constants and modeling macros -->
+  <xacro:include filename="$(find thor_description)/urdf/thor_utilities.xacro"/>
+
+  <!-- Import Gazebo tags -->
+  <xacro:include filename="$(find thor_description)/urdf/thor_gazebo.xacro"/>
+
+  <!-- Import THOR robot -->
+  <xacro:include filename="$(find thor_description)/urdf/thor.xacro"/>
+
+
+  <!--
+    MACRO DEFINITIONS
+  -->
+
+  <!-- Define macros for swerve import -->
+  <xacro:thor name="$(arg robot_name)" parent="odom" hardware_interface="$(arg hardware_interface)">
+	  <origin xyz="0 0 0.053975" rpy="0 0 0"/> <!-- rotate 90 degrees due to error in black box model -->
+  </xacro:thor>
+
+  <xacro:thor_sensors name="thor"/>
+
+</robot>
+
+
+

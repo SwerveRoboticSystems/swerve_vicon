@@ -1,0 +1,665 @@
+<sdf version='1.6'>
+  <world name='default'>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose frame=''>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.5 -1</direction>
+    </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+    </model>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics name='default_physics' default='0' type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='thor'>
+      <link name='odom'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0.054043 0 -0 0</pose>
+          <mass>1.667</mass>
+          <inertia>
+            <ixx>0.0201128</ixx>
+            <ixy>0</ixy>
+            <ixz>0.0005</ixz>
+            <iyy>0.0171128</iyy>
+            <iyz>0</iyz>
+            <izz>0.0336</izz>
+          </inertia>
+        </inertial>
+        <collision name='odom_fixed_joint_lump__thor_body_collision'>
+          <pose frame=''>0 0 0.053975 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/swerve/Swerve/swerve_ws/src/thor/thor_description/meshes/chassis.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='odom_fixed_joint_lump__thor_body_visual'>
+          <pose frame=''>0 0 0.053975 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/swerve/Swerve/swerve_ws/src/thor/thor_description/meshes/chassis.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='odom_fixed_joint_lump__thor_laser_visual_1'>
+          <pose frame=''>0 0 0.166935 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/opt/ros/kinetic/share/sick_tim/meshes/sick_tim551.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>__default__</uri>
+              <name>__default__</name>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <sensor name='thor_laser' type='ray'>
+          <always_on>1</always_on>
+          <visualize>0</visualize>
+          <update_rate>15</update_rate>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>810</samples>
+                <resolution>1</resolution>
+                <min_angle>-2.35619</min_angle>
+                <max_angle>2.35619</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>1</samples>
+                <min_angle>0</min_angle>
+                <max_angle>0</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>0.1</min>
+              <max>10</max>
+              <resolution>0.01</resolution>
+            </range>
+            <noise>
+              <type>gaussian</type>
+              <mean>0</mean>
+              <stddev>0.00667</stddev>
+            </noise>
+          </ray>
+          <plugin name='gazebo_ros_head_hokuyo_controller' filename='libgazebo_ros_laser.so'>
+            <topicName>scan</topicName>
+            <frameName>thor_laser</frameName>
+            <robotNamespace>/</robotNamespace>
+          </plugin>
+          <pose frame=''>0 0 0.166935 0 -0 0</pose>
+        </sensor>
+        <kinematic>0</kinematic>
+      </link>
+      <link name='thor_left_motor'>
+        <pose frame=''>0.069762 0.120832 0.049525 0 -0 2.61799</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.22578</mass>
+          <inertia>
+            <ixx>0.0002675</ixx>
+            <ixy>1.01e-05</ixy>
+            <ixz>-2.2e-06</ixz>
+            <iyy>4.24e-05</iyy>
+            <iyz>-3.68e-05</iyz>
+            <izz>0.0002573</izz>
+          </inertia>
+        </inertial>
+        <collision name='thor_left_motor_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/swerve/Swerve/swerve_ws/src/thor/thor_description/meshes/motor.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='thor_left_motor_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/swerve/Swerve/swerve_ws/src/thor/thor_description/meshes/motor.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <joint name='thor_left_motor_joint' type='revolute'>
+        <child>thor_left_motor</child>
+        <parent>odom</parent>
+        <axis>
+          <xyz>-0.866023 0.500003 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='thor_left_wheel'>
+        <pose frame=''>0.092263 0.159803 0.049525 0 -0 2.61799</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.346</mass>
+          <inertia>
+            <ixx>0.0002079</ixx>
+            <ixy>4.6e-06</ixy>
+            <ixz>1e-07</ixz>
+            <iyy>0.0003299</iyy>
+            <iyz>-5.9e-06</iyz>
+            <izz>0.0002115</izz>
+          </inertia>
+        </inertial>
+        <collision name='thor_left_wheel_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/swerve/Swerve/swerve_ws/src/thor/thor_description/meshes/wheel.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='thor_left_wheel_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/swerve/Swerve/swerve_ws/src/thor/thor_description/meshes/wheel.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <joint name='thor_left_wheel_joint' type='revolute'>
+        <child>thor_left_wheel</child>
+        <parent>thor_left_motor</parent>
+        <axis>
+          <xyz>-0.500003 -0.866023 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='thor_right_motor'>
+        <pose frame=''>0.069762 -0.120832 0.049525 0 -0 0.523599</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.22578</mass>
+          <inertia>
+            <ixx>0.0002675</ixx>
+            <ixy>1.01e-05</ixy>
+            <ixz>-2.2e-06</ixz>
+            <iyy>4.24e-05</iyy>
+            <iyz>-3.68e-05</iyz>
+            <izz>0.0002573</izz>
+          </inertia>
+        </inertial>
+        <collision name='thor_right_motor_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/swerve/Swerve/swerve_ws/src/thor/thor_description/meshes/motor.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='thor_right_motor_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/swerve/Swerve/swerve_ws/src/thor/thor_description/meshes/motor.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <joint name='thor_right_motor_joint' type='revolute'>
+        <child>thor_right_motor</child>
+        <parent>odom</parent>
+        <axis>
+          <xyz>0.866025 0.5 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='thor_right_wheel'>
+        <pose frame=''>0.092262 -0.159803 0.049525 0 -0 0.523599</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.346</mass>
+          <inertia>
+            <ixx>0.0002079</ixx>
+            <ixy>4.6e-06</ixy>
+            <ixz>1e-07</ixz>
+            <iyy>0.0003299</iyy>
+            <iyz>-5.9e-06</iyz>
+            <izz>0.0002115</izz>
+          </inertia>
+        </inertial>
+        <collision name='thor_right_wheel_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/swerve/Swerve/swerve_ws/src/thor/thor_description/meshes/wheel.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='thor_right_wheel_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/swerve/Swerve/swerve_ws/src/thor/thor_description/meshes/wheel.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <joint name='thor_right_wheel_joint' type='revolute'>
+        <child>thor_right_wheel</child>
+        <parent>thor_right_motor</parent>
+        <axis>
+          <xyz>-0.5 0.866025 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='thor_tail_motor'>
+        <pose frame=''>-0.139525 0 0.049525 0 -0 -1.5708</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.22578</mass>
+          <inertia>
+            <ixx>0.0002675</ixx>
+            <ixy>1.01e-05</ixy>
+            <ixz>-2.2e-06</ixz>
+            <iyy>4.24e-05</iyy>
+            <iyz>-3.68e-05</iyz>
+            <izz>0.0002573</izz>
+          </inertia>
+        </inertial>
+        <collision name='thor_tail_motor_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/swerve/Swerve/swerve_ws/src/thor/thor_description/meshes/motor.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='thor_tail_motor_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/swerve/Swerve/swerve_ws/src/thor/thor_description/meshes/motor.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <joint name='thor_tail_motor_joint' type='revolute'>
+        <child>thor_tail_motor</child>
+        <parent>odom</parent>
+        <axis>
+          <xyz>1e-06 -1 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='thor_tail_wheel'>
+        <pose frame=''>-0.184525 -0 0.049525 0 -0 -1.5708</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.346</mass>
+          <inertia>
+            <ixx>0.0002079</ixx>
+            <ixy>4.6e-06</ixy>
+            <ixz>1e-07</ixz>
+            <iyy>0.0003299</iyy>
+            <iyz>-5.9e-06</iyz>
+            <izz>0.0002115</izz>
+          </inertia>
+        </inertial>
+        <collision name='thor_tail_wheel_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/swerve/Swerve/swerve_ws/src/thor/thor_description/meshes/wheel.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='thor_tail_wheel_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/swerve/Swerve/swerve_ws/src/thor/thor_description/meshes/wheel.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <joint name='thor_tail_wheel_joint' type='revolute'>
+        <child>thor_tail_wheel</child>
+        <parent>thor_tail_motor</parent>
+        <axis>
+          <xyz>1 1e-06 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <static>0</static>
+      <plugin name='gazebo_ros_controller' filename='libgazebo_ros_control.so'>
+        <robotNamespace>/thor</robotNamespace>
+      </plugin>
+      <plugin name='p3d_base_controller' filename='libgazebo_ros_p3d.so'>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50.0</updateRate>
+        <bodyName>odom</bodyName>
+        <topicName>odom</topicName>
+        <gaussianNoise>0.01</gaussianNoise>
+        <frameName>world</frameName>
+        <xyzOffsets>0 0 0</xyzOffsets>
+        <rpyOffsets>0 0 0</rpyOffsets>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <pose frame=''>0 0 0 0 -0 0</pose>
+    </model>
+    <state world_name='default'>
+      <sim_time>0 823000000</sim_time>
+      <real_time>58 184794865</real_time>
+      <wall_time>1524355694 915061815</wall_time>
+      <iterations>823</iterations>
+      <model name='ground_plane'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='thor'>
+        <pose frame=''>6e-05 -2.8e-05 0.00134 -8.3e-05 -0.000171 -0.000181</pose>
+        <scale>1 1 1</scale>
+        <link name='odom'>
+          <pose frame=''>6e-05 -2.8e-05 0.00134 -8.3e-05 -0.000171 -0.000181</pose>
+          <velocity>-0.001172 -0.000108 0.003387 -0.000114 0.032914 -0.000467</velocity>
+          <acceleration>1.61478 0.153227 6.80907 -0.724225 -0.172508 0.155659</acceleration>
+          <wrench>2.69184 0.255429 11.3507 0 -0 0</wrench>
+        </link>
+        <link name='thor_left_motor'>
+          <pose frame=''>0.069835 0.120796 0.050867 0.000397 0.000208 2.61781</pose>
+          <velocity>0.000568 -9e-05 0.001038 -0.005544 0.021129 0.000697</velocity>
+          <acceleration>1.34305 0.207438 1.86466 -1.12591 -0.084011 -0.55512</acceleration>
+          <wrench>0.303235 0.046835 0.421003 0 -0 0</wrench>
+        </link>
+        <link name='thor_left_wheel'>
+          <pose frame=''>0.092343 0.159763 0.050849 0.000415 0.000626 2.61781</pose>
+          <velocity>0.000771 -7e-05 0.00014 0.001637 0.015686 -0.002601</velocity>
+          <acceleration>1.51657 0.191789 0.167539 0.356886 1.11665 -1.81827</acceleration>
+          <wrench>0.524732 0.066359 0.057968 0 -0 0</wrench>
+        </link>
+        <link name='thor_right_motor'>
+          <pose frame=''>0.069791 -0.120868 0.050887 0.000773 -0.000106 0.523418</pose>
+          <velocity>0.000447 -0.000161 0.001086 0.009958 0.018018 -0.001955</velocity>
+          <acceleration>1.40524 0.106249 2.04709 -2.34075 -0.82133 -0.755904</acceleration>
+          <wrench>0.317275 0.023989 0.462191 0 -0 0</wrench>
+        </link>
+        <link name='thor_right_wheel'>
+          <pose frame=''>0.092284 -0.159843 0.050853 0.00081 -0.000159 0.523418</pose>
+          <velocity>0.000625 -0.000163 0.000214 0.002835 0.01283 0.002853</velocity>
+          <acceleration>1.74375 0.088511 0.405154 -2.25061 1.28003 1.91193</acceleration>
+          <wrench>0.603337 0.030625 0.140183 0 -0 0</wrench>
+        </link>
+        <link name='thor_tail_motor'>
+          <pose frame=''>-0.139474 2e-06 0.050841 -8.9e-05 -8e-05 -1.57098</pose>
+          <velocity>0.000429 -3.9e-05 0.007982 0.000126 0.033911 -0.000371</velocity>
+          <acceleration>1.2591 0.131435 16.4341 2.0764 -0.9003 -1.46403</acceleration>
+          <wrench>0.284278 0.029675 3.7105 0 -0 0</wrench>
+        </link>
+        <link name='thor_tail_wheel'>
+          <pose frame=''>-0.184473 1e-05 0.050845 -3e-05 -0.000525 -1.57098</pose>
+          <velocity>0.000699 6e-06 0.009654 -0.000318 0.0142 -0.00098</velocity>
+          <acceleration>1.65458 0.130803 19.7819 -1.78206 0.73747 1.99189</acceleration>
+          <wrench>0.572483 0.045258 6.84454 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose frame=''>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose frame=''>2.15457 -1.58426 2.48359 -0 1.07564 2.30819</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+  </world>
+</sdf>

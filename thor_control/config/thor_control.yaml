@@ -1,0 +1,30 @@
+thor:
+
+  # Publish all joint states
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+
+  # Joint Position Controllers
+  joint_left_wheel_pos_controller:
+    type: position_controllers/JointPositionController
+    joint: thor_left_wheel_joint
+  joint_right_wheel_pos_controller:
+    type: position_controllers/JointPositionController
+    joint: thor_right_wheel_joint
+  joint_tail_wheel_pos_controller:
+    type: position_controllers/JointPositionController
+    joint: thor_tail_wheel_joint
+
+  # Joint Velocity Controllers
+  joint_left_wheel_vel_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: thor_left_wheel_joint
+  joint_right_wheel_vel_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: thor_right_wheel_joint
+  joint_tail_wheel_vel_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: thor_tail_wheel_joint
+
+
