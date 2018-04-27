@@ -10,7 +10,6 @@
 <robot name="thor" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <!-- Constants -->
-  <xacro:property name="pi" value="3.14159" />
   <xacro:property name="chassis_mass" value="1.666" />
   <xacro:property name="motor_mass" value="0.22578" />
   <xacro:property name="wheel_mass" value="0.346" />
@@ -19,19 +18,13 @@
   <!-- Common geometry properties -->
   <xacro:property name="chassis_geometry">
     <geometry>
-      <mesh filename="package://thor_description/meshes/chassis.stl" />
-    </geometry>
-  </xacro:property>
-
-  <xacro:property name="motor_geometry">
-    <geometry>
-      <mesh filename="package://thor_description/meshes/motor.stl" />
+      <mesh filename="package://thor_description/meshes/chassis_coarse.stl" />
     </geometry>
   </xacro:property>
 
   <xacro:property name="wheel_geometry">
     <geometry>
-      <mesh filename="package://thor_description/meshes/wheel.stl" />
+      <mesh filename="package://thor_description/meshes/wheel_coarse.stl" />
     </geometry>
   </xacro:property>
 
@@ -44,12 +37,6 @@
   <xacro:property name="chassis_collision_geometry">
     <geometry>
       <cylinder length="0.0762" radius="0.2"/>
-    </geometry>
-  </xacro:property>
-
-  <xacro:property name="motor_collision_geometry">
-    <geometry>
-      <box size="0.0376 0.08682 0.03865"/>
     </geometry>
   </xacro:property>
 
@@ -97,18 +84,6 @@
     </collision>
   </xacro:property>
 
-  <xacro:property name="motor_visual_collision">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <xacro:insert_block name="motor_geometry" />
-      <xacro:insert_block name="color_green" />
-    </visual>
-    <collision>
-      <origin xyz="0 0.0265 -0.0095" rpy="0 0 0" />
-      <xacro:insert_block name="motor_collision_geometry" />
-    </collision>
-  </xacro:property>
-
   <xacro:property name="wheel_visual_collision">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
@@ -134,43 +109,18 @@
   </xacro:property>
 
   <!-- Common link/joint properties -->
-  <xacro:property name="motor_inertial_properties">
-    <origin xyz="0 0 0" rpy="0 0 0" />
-    <mass value="${motor_mass}" />
-    <inertia ixx="0.0002675" ixy="0.0000101" ixz="-0.0000022" iyy="0.0000424" iyz="-0.0000368" izz="0.0002573" />
-  </xacro:property>
-
   <xacro:property name="wheel_inertial_properties">
         <origin xyz="0 0 0" rpy="0 0 0" />
         <mass value="${wheel_mass}" />
-        <inertia ixx="0.0002079" ixy="0.0000046" ixz="0.0000001" iyy="0.0003299" iyz="-0.0000059" izz="0.0002115" />
+        <inertia ixx="0.00026" ixy="0" ixz="0" iyy="0.00038" iyz="0" izz="0.00026" />
   </xacro:property>
 
-  <xacro:macro name="motor_joint" params="joint_name parent child x y theta hardware_interface">
+  <xacro:macro name="wheel_joint" params="joint_name parent child x y theta hardware_interface">
     <joint name="${joint_name}" type="continuous">
       <origin xyz="${x} ${y} -0.00445" rpy="0 0 ${theta}" />
       <parent link="${parent}" />
       <child link="${child}" />
-    </joint>
-
-    <transmission name="${joint_name}_trans">
-      <type>transmission_interface/SimpleTransmission</type>
-      <joint name="${joint_name}">
-        <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
-      </joint>
-      <actuator name="${joint_name}_motor">
-        <mechanicalReduction>${mechanical_reduction}</mechanicalReduction>
-        <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
-      </actuator>
-    </transmission>
-  </xacro:macro>
-
-  <xacro:macro name="wheel_joint" params="joint_name parent child hardware_interface">
-    <joint name="${joint_name}" type="continuous">
-      <origin xyz="0 -0.045 0" rpy="0 0 0" />
-      <parent link="${parent}" />
-      <child link="${child}" />
-      <axis xyz="0 1 0" />
+      <axis xyz="0 -1 0" />
     </joint>
 
     <transmission name="${joint_name}_trans">

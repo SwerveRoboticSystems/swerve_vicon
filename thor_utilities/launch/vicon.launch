@@ -1,0 +1,67 @@
+<!-- 
+@file vicon.launch
+@brief Runs nodes necessary for VICON test
+@author Frederick Wachter - wachterfreddy@gmail.com
+@date Created: 2018-04-25
+-->
+
+<launch>
+
+  <arg name="robot_name" default="thor"/> <!-- by default, set the robot name to thor -->
+  <arg name="rviz" default="true"/> <!-- by default, load RViz -->
+  <arg name="ros_bag" default="true"/> <!-- by default, don't ros bag all topics -->
+  <arg name="custom_bag" default="true"/> <!-- by default, force custom ROS bag name -->
+  <arg name="bag_name"/> <!-- by default, force the user to provide a bag name -->
+
+  <!-- Setup Machine Reference to UpBoard -->
+  <machine name="upboard" address="upboard" user="swerve">
+    <env name="ROS_MASTER_URI" value="http://swerve_laptop:11311/"/>
+    <env name="ROS_IP" value="upboard"/>
+  </machine>
+
+  <!-- Load Robot Description -->
+  <include file="$(find thor_description)/launch/display.launch">
+    <arg name="robot_name" value="$(arg robot_name)"/>
+    <arg name="run_joint_pub" value="false"/>
+    <arg name="rviz" default="false"/>
+  </include>
+
+  <!-- Get Data from LIDAR -->
+  <include machine="upboard" file="$(find sick_description)/launch/display.launch">
+
+  <!-- Get Data from VICON -->
+  <!-- <include file="$(find vicon_bridge)/launch/display.launch"> -->
+
+  <!-- RViz Launch -->
+  <group if="$(arg rviz)">
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find thor_vicon)/config/vicon.rviz"/>
+  </group>
+
+  <!-- ROS Bag Launch -->
+  <group if="$(arg ros_bag)">
+    <include file="$(find thor_vicon)/launch/ros_bag.launch">
+      <arg name="custon_name" value="true"/>
+      <arg name="bag_name" value="$(arg bag_name)"/>
+    </include>
+  </group>
+
+	<!--
+    Run ROS Nodes
+  -->
+  <!-- Get Data from THOR Teensy -->
+  <node machine="upboard" name="rosserial_teensy" pkg="rosserial_python" type="serial_python.py" arg="/dev/teensy_thor" 
+      respawn="true"/>
+
+  <!-- odom to world TF Publisher Node -->
+	<node pkg="thor_navigation" type="vicon_odom_pub" name="vicon_odom_pub"/>
+
+  <!-- Run Robot State Publisher -->
+  <node name="$(arg robot_name)_robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" 
+      respawn="true" output="screen">
+    <remap from="robot_description" to="$(arg robot_name)/robot_description" />
+    <remap from="joint_states" to="$(arg robot_name)/joint_states" />
+  </node>
+
+</launch>
+
+

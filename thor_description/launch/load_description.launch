@@ -13,12 +13,12 @@
 
 	<!-- Load Robot Description -->
   <group if="$(arg vel_control)">
-    <param name="robot_description" command="$(find xacro)/xacro '--inorder' 
+    <param name="$(arg robot_name)/robot_description" command="$(find xacro)/xacro '--inorder' 
         '$(find thor_description)/urdf/thor.urdf.xacro' 
         hardware_interface:=VelocityJointInterface robot_name:=$(arg robot_name)"/>
   </group>
   <group unless="$(arg vel_control)">
-    <param name="robot_description" command="$(find xacro)/xacro '--inorder' 
+    <param name="$(arg robot_name)/robot_description" command="$(find xacro)/xacro '--inorder' 
         '$(find thor_description)/urdf/thor.urdf.xacro' 
         hardware_interface:=PositionJointInterface robot_name:=$(arg robot_name)"/>
   </group>

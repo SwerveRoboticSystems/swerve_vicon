@@ -22,7 +22,7 @@
   -->
 
   <!-- Fixed odom dummy frame -->
-  <link name="odom" />
+  <link name="$(arg robot_name)_odom" />
 
 
   <!-- 
@@ -44,8 +44,8 @@
   -->
 
   <!-- Define macros for swerve import -->
-  <xacro:thor name="$(arg robot_name)" parent="odom" hardware_interface="$(arg hardware_interface)">
-	  <origin xyz="0 0 0.053975" rpy="0 0 0"/> <!-- rotate 90 degrees due to error in black box model -->
+  <xacro:thor name="$(arg robot_name)" parent="$(arg robot_name)_odom" hardware_interface="$(arg hardware_interface)">
+	  <origin xyz="0 0 0.053975" rpy="0 0 0"/>
   </xacro:thor>
 
   <xacro:thor_sensors name="thor"/>

@@ -1,0 +1,83 @@
+<!-- 
+@file navigation.launch
+@brief Runs nodes necessary for getting data from and running THOR
+@author Frederick Wachter - wachterfreddy@gmail.com
+@date Created: 2018-04-26
+-->
+
+<launch>
+
+  <arg name="robot_name" default="thor"/> <!-- by default, set the robot name to thor -->
+  <arg name="rviz" default="true"/> <!-- by default, load RViz -->
+  <arg name="rviz_file" default="thor"/> <!-- by default, load thor RViz file -->
+  <arg name="static_tf" default="false"/> <!-- by default, don't send a static tf between odom and world frame -->
+
+  <arg name="thor_ros_control" default="false"/> <!-- by default, don't control THOR through ROS -->
+  <arg name="thor_keyboard_control" default="false"/> <!-- by default, don't control THOR through ROS using the keyboard -->
+
+  <arg name="ros_bag" default="true"/> <!-- by default, don't ros bag all topics -->
+  <arg name="custom_bag" default="true"/> <!-- by default, force custom ROS bag name -->
+  <arg name="bag_name" default="test"/> <!-- by default, force the user to provide a bag name -->
+
+  <!-- ROS Bag Launch -->
+  <group if="$(arg ros_bag)">
+    <include file="$(find thor_utilities)/launch/ros_bag.launch">
+      <arg name="custom_name" value="true"/>
+      <arg name="bag_name" value="$(arg bag_name)"/>
+    </include>
+  </group>
+
+  <!-- Load THOR -->
+  <include file="$(find thor_description)/launch/display.launch">
+    <arg name="robot_name" value="$(arg robot_name)"/>
+    <arg name="solo" value="true"/>
+    <arg name="run_joint_pub" value="false"/>
+    <arg name="static_tf" value="$(arg static_tf)"/>
+
+    <arg name="rviz" value="$(arg rviz)"/>
+    <arg name="rviz_file" value="$(arg rviz_file)"/>
+  </include>
+
+  <!-- If controlling THOR through ROS -->
+  <group if="$(arg thor_ros_control)">
+    <!-- Tell THOR it will be controlled using ROS -->
+    <node pkg="rostopic" type="rostopic" name="ros_control_pub" args="pub /thor/ros_control std_msgs/Bool 'data: true'" 
+        output="screen"/>
+
+    <!-- If controlling THOR using the keyboard teleop package -->
+    <group if="$(arg thor_keyboard_control)">
+      <node name="thor_ros_control" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" output="screen" 
+          launch-prefix="xterm -e">
+        <remap from="cmd_vel" to="/$(arg robot_name)/cmd_vel"/>
+      </node>
+    </group>
+
+    <!-- If controlling THOR using an RC controller connected to the computer -->
+    <group unless="$(arg thor_keyboard_control)">
+      <node name="rosserial_ros_control" pkg="rosserial_python" type="serial_node.py"> 
+        <param name="port" value="/dev/ttyACM0"/>
+        <param name="baud" value="115200"/>
+      </node>
+    </group>
+  </group>
+
+  <!-- Run Nodes on Remote Machine -->
+  <group>
+    <machine name="thor" address="upboard" env-loader="/home/swerve/Swerve/swerve_ws/src/upboard_setup.sh" 
+        user="swerve" default="true"/>
+
+    <!-- Get Data from LIDAR -->
+    <include file="$(find sick_description)/launch/display.launch">
+      <arg name="robot_name" value="$(arg robot_name)"/>
+    </include>
+
+    <!-- Get Data from THOR Teensy -->
+    <node name="rosserial_teensy" pkg="rosserial_python" type="serial_node.py"> 
+      <param name="port" value="/dev/teensy_thor"/>
+      <param name="baud" value="115200"/>
+    </node>
+  </group>
+
+</launch>
+
+

@@ -1,0 +1,45 @@
+<!-- 
+@file vicon.launch
+@brief Runs nodes necessary for VICON test
+@author Frederick Wachter - wachterfreddy@gmail.com
+@date Created: 2018-04-25
+-->
+
+<launch>
+
+  <arg name="robot_name" default="thor"/> <!-- by default, set the robot name to thor -->
+  <arg name="rviz" default="true"/> <!-- by default, load RViz -->
+  <arg name="rviz_file" default="vicon"/> <!-- by default, load thor RViz file -->
+
+  <arg name="ros_bag" default="true"/> <!-- by default, don't ros bag all topics -->
+  <arg name="custom_bag" default="true"/> <!-- by default, force custom ROS bag name -->
+  <arg name="bag_name"/> <!-- by default, force the user to provide a bag name -->
+
+  <!--
+    ROS Includes
+  -->
+  <!-- Run THOR Navigation Package -->
+  <include file="$(find thor_navigation)/launch/navigation.launch">
+    <arg name="robot_name" value="$(arg robot_name)"/>
+    <arg name="solo" value="true"/>
+    <arg name="run_joint_pub" value="false"/>
+
+    <arg name="custom_name" value="true"/>
+    <arg name="bag_name" value="$(arg bag_name)"/>
+
+    <arg name="rviz" default="$(arg rviz)"/>
+    <arg name="rviz_file" value="$(arg rviz_file)"/>
+  </include>
+
+  <!-- Get Data from VICON -->
+  <include file="$(find vicon_bridge)/launch/display.launch">
+
+	<!--
+    Run ROS Nodes
+  -->
+  <!-- odom to world TF Publisher Node -->
+	<node pkg="thor_vicon" type="vicon_odom_pub" name="vicon_odom_pub"/>
+
+</launch>
+
+

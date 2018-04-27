@@ -1,0 +1,22 @@
+<!-- 
+@file ros_bag.launch
+@brief Creates a ROS bag of important topics on ROS network for VICON tests
+@author Frederick Wachter - wachterfreddy@gmail.com
+@date Created: 2018-04-25
+-->
+
+<launch>
+
+  <arg name="custom_name" default="false"/> <!-- by default, don't use the custom name -->
+  <arg name="bag_name" default=""/> <!-- used to store custom ROS bag name if desired -->
+
+  <group if="$(arg custom_name)">
+    <node pkg="thor_vicon" type="ros_bag.sh" name="vicon_ros_bag" args="$(find thor_vicon) $(arg bag_name)"/>
+  </group>
+  <group unless="$(arg custom_name)">
+    <node pkg="thor_vicon" type="ros_bag.sh" name="vicon_ros_bag" args="$(find thor_vicon)"/>
+  </group>
+
+</launch>
+
+

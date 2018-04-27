@@ -35,18 +35,9 @@
     <!--
       LEFT WHEEL DEFINITION
     -->
-    <xacro:motor_joint joint_name="${name}_left_motor_joint" parent="${name}_body" child="${name}_left_motor" 
-      x="0.0697624" y="0.1208321" theta="2.61799" hardware_interface="${hardware_interface}"/>
 
-    <link name="${name}_left_motor">
-      <inertial>
-        <xacro:insert_block name="motor_inertial_properties" />
-      </inertial>
-      <xacro:insert_block name="motor_visual_collision" />
-    </link>
-
-    <xacro:wheel_joint joint_name="${name}_left_wheel_joint" parent="${name}_left_motor" child="${name}_left_wheel" 
-      hardware_interface="${hardware_interface}"/>
+    <xacro:wheel_joint joint_name="${name}_left_wheel_joint" parent="${name}_body" child="${name}_left_wheel" 
+      x="0.09226" y="0.1598" theta="2.61799" hardware_interface="${hardware_interface}"/>
 
     <link name="${name}_left_wheel">
       <inertial>
@@ -58,18 +49,9 @@
     <!--
       RIGHT WHEEL DEFINITION
     -->
-    <xacro:motor_joint joint_name="${name}_right_motor_joint" parent="${name}_body" child="${name}_right_motor" 
-      x="0.0697624" y="-0.1208321" theta="0.523599" hardware_interface="${hardware_interface}"/>
 
-    <link name="${name}_right_motor">
-      <inertial>
-        <xacro:insert_block name="motor_inertial_properties" />
-      </inertial>
-      <xacro:insert_block name="motor_visual_collision" />
-    </link>
-
-    <xacro:wheel_joint joint_name="${name}_right_wheel_joint" parent="${name}_right_motor" child="${name}_right_wheel" 
-      hardware_interface="${hardware_interface}"/>
+    <xacro:wheel_joint joint_name="${name}_right_wheel_joint" parent="${name}_body" child="${name}_right_wheel" 
+      x="0.09226" y="-0.1598" theta="0.523599" hardware_interface="${hardware_interface}"/>
 
     <link name="${name}_right_wheel">
       <inertial>
@@ -81,18 +63,9 @@
     <!--
       TAIL WHEEL DEFINITION
     -->
-    <xacro:motor_joint joint_name="${name}_tail_motor_joint" parent="${name}_body" child="${name}_tail_motor" 
-      x="-0.1395249" y="0" theta="4.71239" hardware_interface="${hardware_interface}"/>
 
-    <link name="${name}_tail_motor">
-      <inertial>
-        <xacro:insert_block name="motor_inertial_properties" />
-      </inertial>
-      <xacro:insert_block name="motor_visual_collision" />
-    </link>
-
-    <xacro:wheel_joint joint_name="${name}_tail_wheel_joint" parent="${name}_tail_motor" child="${name}_tail_wheel" 
-      hardware_interface="${hardware_interface}"/>
+    <xacro:wheel_joint joint_name="${name}_tail_wheel_joint" parent="${name}_body" child="${name}_tail_wheel" 
+      x="-0.18452" y="0" theta="4.71239" hardware_interface="${hardware_interface}"/>
 
     <link name="${name}_tail_wheel">
       <inertial>
@@ -118,6 +91,22 @@
         <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001" /> 
       </inertial> 
       <xacro:insert_block name="lidar_visual_collision" />
+    </link>
+
+    <joint name="${name}_imu_joint" type="fixed">
+      <origin xyz="-0.07378 0.03088 0.04318" rpy="${pi} 0 -${pi/2}" />
+      <parent link="${name}_body" />
+      <child link="${name}_imu" />
+      <axis xyz="0 0 " />
+    </joint>
+
+    <link name="${name}_imu">
+      <inertial> 
+        <mass value="0.001" /> 
+        <origin xyz="0 0 0" /> 
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001" /> 
+      </inertial> 
+      <!-- <xacro:insert_block name="imu_visual_collision" /> -->
     </link>
 
     <!-- <xacro:sick_tim551 name="${name}_laser" ros_topic="scan" height="0.0511"/> -->
